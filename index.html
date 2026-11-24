@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RIBO Level 1 Self-Study</title>
+<meta name="description" content="Free self-study for the RIBO Level 1 Ontario insurance broker exam: lessons, 490 original practice questions, a timed mock exam, audio lessons and progress tracking.">
+<meta name="theme-color" content="#0d6b67">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RIBO Prep">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a licensing workbook — facts strip up top, four tabs (plan, course, practice, sources), single readable column */
+:root{
+  --paper:#f4f6f8; --card:#ffffff; --ink:#15212c; --muted:#5b6876; --line:#d9dfe6;
+  --accent:#0d6b67; --accent-soft:#e1f0ee; --ok:#1f7a3d; --ok-soft:#e3f3e8; --bad:#b4322a; --bad-soft:#f8e6e4; --warn:#8a5a00; --warn-soft:#fbf0d9;
+  --display:"Archivo",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f161c; --card:#172129; --ink:#e6edf2; --muted:#9aa8b5; --line:#2a3742;
+  --accent:#4cc3b8; --accent-soft:#16332f; --ok:#5fcf86; --ok-soft:#173423; --bad:#f07f74; --bad-soft:#3a1d1a; --warn:#e7b65a; --warn-soft:#3a2d12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f161c; --card:#172129; --ink:#e6edf2; --muted:#9aa8b5; --line:#2a3742;
+  --accent:#4cc3b8; --accent-soft:#16332f; --ok:#5fcf86; --ok-soft:#173423; --bad:#f07f74; --bad-soft:#3a1d1a; --warn:#e7b65a; --warn-soft:#3a2d12; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+/* progress + listen */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.tiles div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.tiles b{display:block;font:700 24px var(--display);font-variant-numeric:tabular-nums}
+.tiles span{font-size:13px;color:var(--muted)}
+.dombar{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;font-size:15px}
+.dombar .track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.dombar .track i{display:block;height:100%;background:var(--accent)}
+.dombar .track i.low{background:var(--bad)}
+.dombar .num{text-align:right;font-variant-numeric:tabular-nums}
+.tracklist{display:flex;flex-direction:column;gap:6px}
+.trk{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;color:var(--ink);cursor:pointer}
+.trk.cur{border-color:var(--accent);background:var(--accent-soft)}
+.trk small{color:var(--muted);font-variant-numeric:tabular-nums}
+.trk .t{min-width:0}
+.trk .pbar{grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.trk .pbar i{display:block;height:100%;background:var(--accent)}
+.player{position:sticky;bottom:env(safe-area-inset-bottom,0px);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;z-index:4}
+.player audio{width:100%}
+select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+body{background:var(--paper);color:var(--ink);font:17px/1.55 var(--body);}
+.wrap{max-width:860px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:24px;font-weight:700;margin-top:8px}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:62ch;margin-top:10px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:22px}
+.fact{background:var(--card);padding:12px 14px}
+.fact b{display:block;font:700 22px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.fact span{font-size:14px;color:var(--muted)}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:28px 0 20px;border-bottom:1px solid var(--line)}
+nav.tabs a{padding:10px 14px;text-decoration:none;color:var(--muted);font-weight:600;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
+nav.tabs a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.view{display:flex;flex-direction:column;gap:18px}
+.note{background:var(--warn-soft);color:var(--ink);border-radius:8px;padding:12px 14px;font-size:15.5px}
+.note b{color:var(--warn)}
+.week{border-top:1px solid var(--line);padding-top:14px;display:grid;grid-template-columns:110px 1fr;gap:12px}
+.week .when{font:500 13px/1.4 var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+.week ul,.lesson ul{margin:6px 0 0;padding-left:20px}
+.week li,.lesson li{margin:3px 0}
+@media (max-width:560px){.week{grid-template-columns:1fr;gap:4px}}
+details.lesson{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 16px}
+details.lesson summary{cursor:pointer;padding:14px 0;display:flex;gap:12px;align-items:baseline;list-style:none}
+details.lesson summary::-webkit-details-marker{display:none}
+details.lesson summary .w{margin-left:auto;font:500 12px var(--mono);color:var(--muted);white-space:nowrap}
+details.lesson[open] summary{border-bottom:1px solid var(--line)}
+.lesson .body{padding:12px 0 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+td:first-child{font-family:var(--mono);font-size:14px;white-space:nowrap}
+.formula{font-family:var(--mono);background:var(--accent-soft);padding:10px 12px;border-radius:8px;font-size:14.5px;overflow-x:auto}
+/* practice */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 14px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.btn{border:0;background:var(--accent);color:var(--card);border-radius:8px;padding:10px 16px;font:700 15px var(--body);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.qmeta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tag{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.tag.y{color:var(--warn)}
+.qtext{font-size:18px;font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:28px 1fr;gap:8px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;color:var(--ink);cursor:pointer}
+.opt .k{font:600 14px var(--mono);color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.explain{border-left:3px solid var(--accent);padding:4px 0 4px 12px;color:var(--ink);font-size:16px}
+.explain b.ok{color:var(--ok)} .explain b.no{color:var(--bad)}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.score div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.score b{font:700 20px var(--display);font-variant-numeric:tabular-nums;display:block}
+.score span{font-size:13px;color:var(--muted)}
+.pass{color:var(--ok)} .fail{color:var(--bad)}
+.res{display:flex;flex-direction:column;gap:10px}
+.res a{font-weight:600}
+.res li{margin:6px 0}
+/* mock exam */
+.mockhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.timer{font:700 22px var(--display);font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.opt.sel{background:var(--accent-soft);border-color:var(--accent)}
+.opt.sel .k{color:var(--accent)}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:4px}
+.navgrid button{font:500 12px var(--mono);padding:7px 0;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:5px;cursor:pointer}
+.navgrid button.done{background:var(--accent-soft);color:var(--ink)}
+.navgrid button.flag{border-color:var(--warn);color:var(--warn);font-weight:700}
+.navgrid button.cur{outline:2px solid var(--accent);outline-offset:1px;color:var(--ink)}
+.rowbtns{display:flex;gap:8px;flex-wrap:wrap}
+.miss{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:6px}
+.miss .yours{color:var(--bad)} .miss .corr{color:var(--ok)}
+footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .3s ease}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Ontario · General insurance broker licence · 2026 blueprint</div>
+  <h1>RIBO Level 1 Self-Study</h1>
+  <p class="lede">A study plan, a short course and original practice questions for the RIBO Level 1 Entry-Level Broker exam. You don't need a paid course. You need the free official documents, about four weeks and the exam fee.</p>
+
+  <div class="facts" aria-label="Exam facts">
+    <div class="fact"><b>100 + 15</b><span>scored + unscored pilot questions</span></div>
+    <div class="fact"><b>3 hours</b><span>multiple choice only</span></div>
+    <div class="fact"><b>75%</b><span>to pass (75 of 100)</span></div>
+    <div class="fact"><b>$325</b><span>per attempt, paid to IIO or IBAO</span></div>
+    <div class="fact"><b>Closed book</b><span>only on-screen calculator and notes</span></div>
+  </div>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#plan">Study plan</a>
+    <a href="#course">Course</a>
+    <a href="#practice">Practice</a>
+    <a href="#listen">Listen</a>
+    <a href="#progress">My progress</a>
+    <a href="#sources">Free sources</a>
+  </nav>
+
+  <!-- PLAN -->
+  <section class="view" id="v-plan">
+    <div class="note"><b>About "the real questions":</b> RIBO keeps live exam questions confidential, and its exam rules forbid copying or sharing them. Sites selling "actual questions" or "dumps" are selling leaked or made-up material, and using it can get your result cancelled. The only real questions you can legally use are the retired ones in RIBO's official sample PDF (linked under Free sources). Every practice question on this page is original and mapped to RIBO's published blueprint.</div>
+
+    <h2>What the exam covers</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Content domain</th><th>Share</th><th>What to read</th></tr></thead>
+      <tbody>
+        <tr><td>General</td><td>25%</td><td>Insurance principles, market players, RIB Act, Regs 989/990/991, By-Laws 1–3, privacy and ethics</td></tr>
+        <tr><td>Auto</td><td>25%</td><td>OAP 1 (whole policy, statutory conditions), OPCF endorsements, Fault Determination Rules, July 2026 accident benefit changes</td></tr>
+        <tr><td>Habitational</td><td>25%</td><td>A homeowners, tenants and condo wording from any major insurer; water endorsements; co-insurance math</td></tr>
+        <tr><td>Commercial</td><td>20%</td><td>CGL, business property, business interruption, crime, equipment breakdown, commercial auto, specialty lines</td></tr>
+        <tr><td>Travel</td><td>5%</td><td>One travel medical wording: pre-existing conditions, stability clause, claims process</td></tr>
+      </tbody>
+    </table></div>
+    <p>Questions also test thinking level: about 40–45% recall, 40–45% understanding and 15–20% applying a rule to a client situation. That last group includes math (co-insurance, DCPD fault splits, depreciation), so practise the formulas until you can do them fast.</p>
+
+    <h2>Four-week plan (about 90 minutes a day)</h2>
+    <div class="week"><div class="when">Day 1</div><div>
+      <p>Book the exam for about 30 days out, through the Insurance Institute of Ontario or IBAO. A fixed date keeps you on schedule. Download every document under Free sources.</p></div></div>
+    <div class="week"><div class="when">Week 1</div><div>
+      <p><b>General + broker rules.</b> Course lessons 1–2.</p>
+      <ul><li>Read the RIB Act, Reg 991 (code of conduct, trust accounts, records) and By-Law 3 (registration). Skim Regs 989 and 990.</li>
+      <li>Make flashcards: every regulator and what it does, every principle (indemnity, subrogation, utmost good faith, insurable interest).</li>
+      <li>Practice tab: General, 20 questions a day.</li></ul></div></div>
+    <div class="week"><div class="when">Week 2</div><div>
+      <p><b>Auto.</b> Lesson 3. This is the most detailed domain, so read the OAP 1 itself, section by section.</p>
+      <ul><li>Draw the OAP 1 map (Sections 3–7) on one page from memory.</li>
+      <li>Learn the OPCF table in lesson 3 by number and purpose.</li>
+      <li>Read the FSRA July 2026 accident benefits summary. Know what is mandatory now and what is optional.</li>
+      <li>Do 10 DCPD and fault-split calculations.</li></ul></div></div>
+    <div class="week"><div class="when">Week 3</div><div>
+      <p><b>Habitational, commercial, travel.</b> Lessons 4–6.</p>
+      <ul><li>Read one full homeowners wording slowly: insuring agreement, coverages A–H, exclusions, conditions, special limits.</li>
+      <li>Do 10 co-insurance problems until the formula is automatic.</li>
+      <li>Commercial is new since 2025 and is 20% of the score. Focus on concepts, not wording details.</li></ul></div></div>
+    <div class="week"><div class="when">Week 4</div><div>
+      <p><b>Exam practice.</b> Lessons 7–8.</p>
+      <ul><li>Do RIBO's official sample PDF timed, then at least two timed mock exams on the Practice tab.</li>
+      <li>For every miss, find the rule in the source document and write one line about it.</li>
+      <li>Aim for 85%+ in practice. The real exam feels harder than practice.</li>
+      <li>Last two days: flashcards and the OPCF table only. Sleep.</li></ul></div></div>
+
+    <h2>What it costs on your own</h2>
+    <div class="tbl"><table>
+      <tbody>
+        <tr><td>Exam</td><td>$325 per attempt (2026 fee)</td></tr>
+        <tr><td>Study materials</td><td>$0. Every source below is free from RIBO, FSRA, Ontario e-Laws or insurers' public policy wordings.</td></tr>
+        <tr><td>Licence (after passing)</td><td>$265/year from Oct 1, 2026, plus a criminal record check. You also need a job offer from a RIBO-registered brokerage.</td></tr>
+        <tr><td>Retakes</td><td>Two attempts per exam provider, at least two weeks apart. After two failures with one provider there is an 8-month wait.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- COURSE -->
+  <section class="view" id="v-course" hidden>
+    <p>Eight short lessons. Each one is the minimum you need before reading the source documents. Read the lesson, then the source, then do the matching practice set.</p>
+
+    <details class="lesson"><summary><h3>Abbreviations and names</h3><span class="w">Glossary</span></summary><div class="body">
+      <div class="tbl"><table>
+        <thead><tr><th>Short form</th><th>What it stands for and means</th></tr></thead>
+        <tbody>
+          <tr><td>RIBO</td><td>Registered Insurance Brokers of Ontario. The regulator that licenses and disciplines general insurance brokers in Ontario.</td></tr>
+          <tr><td>FSRA</td><td>Financial Services Regulatory Authority of Ontario. Regulates insurance companies and agents, and approves auto insurance rates.</td></tr>
+          <tr><td>CCIR</td><td>Canadian Council of Insurance Regulators. The national group of provincial insurance regulators.</td></tr>
+          <tr><td>CISRO</td><td>Canadian Insurance Services Regulatory Organizations. The national group of regulators of agents and brokers.</td></tr>
+          <tr><td>IBAO</td><td>Insurance Brokers Association of Ontario. The brokers' trade association. It sells courses and is one place to book the exam.</td></tr>
+          <tr><td>IIO</td><td>Insurance Institute of Ontario. An education body and the other place to book the exam.</td></tr>
+          <tr><td>RIB Act</td><td>Registered Insurance Brokers Act. The Ontario law that creates RIBO and sets broker rules.</td></tr>
+          <tr><td>Reg 991</td><td>Regulation 991 under the RIB Act. Holds the broker code of conduct, trust account and record rules.</td></tr>
+          <tr><td>OAP 1</td><td>Ontario Automobile Policy, owner's form. The standard personal auto policy every Ontario insurer uses.</td></tr>
+          <tr><td>OAP 4</td><td>Ontario Automobile Policy, garage form. For businesses like repair shops and car dealers.</td></tr>
+          <tr><td>OPCF</td><td>Ontario Policy Change Form. A standard endorsement that adds, removes or changes auto coverage.</td></tr>
+          <tr><td>SPF 6</td><td>Standard Policy Form 6. The non-owned automobile policy, covering a business when employees drive their own cars for work.</td></tr>
+          <tr><td>SABS</td><td>Statutory Accident Benefits Schedule. The regulation that sets accident benefits for people injured in car accidents.</td></tr>
+          <tr><td>DCPD</td><td>Direct Compensation – Property Damage. Your own insurer pays your car damage for the part of the accident you didn't cause.</td></tr>
+          <tr><td>MIG</td><td>Minor Injury Guideline. Caps treatment for minor injuries like sprains and whiplash.</td></tr>
+          <tr><td>FA</td><td>Facility Association. The auto insurer of last resort for drivers no regular insurer will take.</td></tr>
+          <tr><td>MVACF</td><td>Motor Vehicle Accident Claims Fund. Pays accident victims when no insurance applies.</td></tr>
+          <tr><td>CAIA</td><td>Compulsory Automobile Insurance Act. The law that makes auto insurance mandatory in Ontario.</td></tr>
+          <tr><td>CVOR</td><td>Commercial Vehicle Operator's Registration. Needed to operate heavy trucks and buses in Ontario.</td></tr>
+          <tr><td>MGA</td><td>Managing General Agent. A firm given authority by insurers to underwrite and bind coverage, often for specialty risks.</td></tr>
+          <tr><td>CGL</td><td>Commercial General Liability. A business's main liability policy, covering injury and damage to others.</td></tr>
+          <tr><td>BI</td><td>Business Interruption. Pays lost income and ongoing costs while a business is closed after an insured loss.</td></tr>
+          <tr><td>E&amp;O</td><td>Errors and Omissions. Professional liability insurance for mistakes in professional services, including a broker's own mistakes.</td></tr>
+          <tr><td>D&amp;O</td><td>Directors and Officers. Covers company or non-profit leaders sued for their management decisions.</td></tr>
+          <tr><td>ACV</td><td>Actual Cash Value. Replacement cost minus depreciation.</td></tr>
+          <tr><td>ALE</td><td>Additional Living Expense. Extra living costs when your home can't be lived in (homeowners Coverage D).</td></tr>
+          <tr><td>TLL</td><td>Tenants' Legal Liability. Covers a tenant who is legally responsible for damaging the rented property.</td></tr>
+          <tr><td>OHIP</td><td>Ontario Health Insurance Plan. Ontario's public health plan, which covers very little outside Canada.</td></tr>
+          <tr><td>PIPEDA</td><td>Personal Information Protection and Electronic Documents Act. The federal privacy law for businesses.</td></tr>
+          <tr><td>CASL</td><td>Canada's Anti-Spam Legislation. Requires consent before sending commercial emails and texts.</td></tr>
+          <tr><td>PCI</td><td>Payment Card Industry security standard. Rules for handling clients' credit card data.</td></tr>
+          <tr><td>CE</td><td>Continuing Education. Courses brokers must take every year to keep their licence.</td></tr>
+          <tr><td>CAIB, CIP, FCIP</td><td>Canadian Accredited Insurance Broker, Chartered Insurance Professional, Fellow Chartered Insurance Professional. Industry designations.</td></tr>
+          <tr><td>WETT</td><td>Wood Energy Technology Transfer. The certified inspection insurers ask for on wood stoves.</td></tr>
+        </tbody>
+      </table></div>
+    </div></details>
+
+    <details class="lesson" open><summary><h3>1. How insurance works</h3><span class="w">General · 25%</span></summary><div class="body">
+      <ul>
+        <li><b>Insurance</b> pools many people's premiums to pay the losses of the few. It is a contract of <b>indemnity</b>: it restores you to where you were before the loss, no better.</li>
+        <li><b>Insurable interest</b>: you must suffer a financial loss if the property is damaged. For property it must exist at the time of loss.</li>
+        <li><b>Utmost good faith</b>: both sides must disclose material facts. <b>Material misrepresentation</b> or non-disclosure can void the policy or defeat a claim.</li>
+        <li><b>Subrogation</b>: after paying, the insurer takes over the insured's right to sue whoever caused the loss. <b>Contribution</b>: two policies covering the same loss share it.</li>
+        <li><b>Peril</b> = cause of loss (fire, theft). <b>Hazard</b> = condition that makes a loss more likely or worse. <b>Physical hazard</b> is tangible (oily rags, old wiring). <b>Moral hazard</b> is about the person's honesty or motives (over-insuring a failing business).</li>
+        <li><b>Distribution</b>: <b>brokers</b> represent the client and place business with many insurers; <b>agents</b> represent the insurer (captive agents only one); <b>direct writers</b> sell to the public with their own employees.</li>
+        <li><b>Insurer types</b>: stock companies (owned by shareholders), mutuals (owned by policyholders), <b>Lloyd's</b> (a marketplace where syndicates underwrite, not one company), <b>MGAs</b> (given authority by insurers to underwrite and bind, often for specialty risks).</li>
+        <li><b>Facility Association</b>: the auto market of last resort, funded by all auto insurers in the province, for drivers who can't get coverage in the regular market.</li>
+        <li><b>Binding authority</b>: the broker's power, granted by contract with each insurer, to put coverage in force immediately within set limits.</li>
+        <li><b>Loss ratio</b> = claims incurred ÷ premiums earned. Rates rise with inflation, rebuild costs, climate losses (water, hail, wildfire), fraud and new technology like expensive car sensors.</li>
+        <li>Canada uses <b>common law</b>, except Quebec, which uses the <b>Civil Code</b> for private law.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>2. Rules for brokers</h3><span class="w">General · 25%</span></summary><div class="body">
+      <div class="tbl"><table>
+        <thead><tr><th>Body</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>RIBO</td><td>Self-regulatory body for general insurance brokers in Ontario: licensing, conduct, complaints, discipline. Set up under the Registered Insurance Brokers Act.</td></tr>
+          <tr><td>FSRA</td><td>Regulates insurers, agents and auto rates in Ontario. Approves auto rates and underwriting rules, and enforces the Take All Comers rule.</td></tr>
+          <tr><td>CCIR</td><td>National council of insurance regulators. Sets shared guidance such as Fair Treatment of Customers.</td></tr>
+          <tr><td>CISRO</td><td>National group of intermediary (agent/broker) regulators. Wrote the Code of Conduct for Insurance Intermediaries.</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>Level 1</b> licence = "acting under supervision". You must work for a RIBO-registered brokerage under a <b>Principal Broker</b>. You can't run your own brokerage.</li>
+        <li>Know what's in the <b>RIB Act</b>, <b>Reg 991</b> (code of conduct, misconduct, trust accounts, records) and <b>By-Law 3</b> (registration, and changes you must report, such as changing brokerages).</li>
+        <li><b>Premium money is trust money.</b> It goes into a trust account and can't pay the brokerage's own bills.</li>
+        <li><b>Disclose conflicts of interest</b> before recommending: insurer ownership of the brokerage, commissions, contingent profit-sharing and fees.</li>
+        <li><b>Tied selling</b> (making one product a condition of buying another) is prohibited. <b>Negative option billing</b> (charging for something the client didn't agree to) is prohibited.</li>
+        <li><b>Privacy</b>: under PIPEDA, collect personal information only for a stated purpose, with consent (express or implied), and protect it. CASL requires consent before sending commercial electronic messages.</li>
+        <li><b>E&amp;O</b> (errors and omissions) insurance covers a broker's professional negligence. Example: forgetting to add an endorsement the client asked for.</li>
+        <li><b>Fraud</b>: you must not take part in or ignore it. Report it under brokerage procedures and the insurer's rules.</li>
+        <li>Licences renew every year (Oct 1–Sep 30). RIBO requires <b>continuing education</b> hours, and tracking them is your job.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>3. Personal auto (OAP 1)</h3><span class="w">Auto · 25%</span></summary><div class="body">
+      <div class="tbl"><table>
+        <thead><tr><th>OAP 1</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Section 3</td><td>Third-party liability. You hurt someone or damage their property. Minimum <b>$200,000</b>, most people buy $1–2M.</td></tr>
+          <tr><td>Section 4</td><td>Accident benefits (no-fault). Pays for your own injuries, whoever caused the crash. Details are in the SABS regulation.</td></tr>
+          <tr><td>Section 5</td><td>Uninsured automobile. Covers injury caused by an uninsured or unidentified driver, and damage to your car by an identified uninsured driver.</td></tr>
+          <tr><td>Section 6</td><td>DCPD (direct compensation, property damage). Your own insurer pays for your car to the extent you are <b>not at fault</b>, for collisions in Ontario with another insured vehicle. You can opt out with OPCF 49.</td></tr>
+          <tr><td>Section 7</td><td>Loss or damage to your own car. Options: <b>All Perils</b>, or <b>Collision/Upset</b> plus <b>Comprehensive</b>, or <b>Specified Perils</b> (named perils only, e.g. fire, theft, hail).</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><b>July 1, 2026 change:</b> only <b>medical, rehabilitation and attendant care</b> accident benefits stay mandatory ($65,000 combined for non-catastrophic injuries, $1,000,000 for catastrophic). Income replacement, non-earner, caregiver, death and funeral and the other benefits became optional. Optional benefits apply only to the named insured, spouse, dependants and listed drivers. Auto insurance is now first payer for medical and rehab, ahead of workplace health plans. Exam items may still be updating, so read FSRA's summary and check which version your exam provider tests.</div>
+      <h3>Endorsements (OPCFs) to know by number</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>OPCF</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>5</td><td>Permission to rent or lease the car to someone else</td></tr>
+          <tr><td>16 / 17</td><td>Suspend coverage (e.g. car stored for winter) / reinstate it</td></tr>
+          <tr><td>19 / 19A</td><td>Value limits on the insured car (a stated or agreed value instead of actual cash value). Read both wordings.</td></tr>
+          <tr><td>20</td><td>Loss of use / transportation replacement (rental car after a covered loss)</td></tr>
+          <tr><td>23A</td><td>Lienholder (mortgage) clause, protecting the lender's interest</td></tr>
+          <tr><td>27</td><td>Liability for damage to non-owned automobiles (rentals, borrowed cars)</td></tr>
+          <tr><td>28 / 28A</td><td>Reduce coverage for a named person / exclude a named driver completely</td></tr>
+          <tr><td>39</td><td>Accident waiver (first at-fault accident doesn't raise the rate)</td></tr>
+          <tr><td>40</td><td>Fire and theft deductible</td></tr>
+          <tr><td>43 / 43A</td><td>Removing depreciation deduction (new car replaced or paid at new value)</td></tr>
+          <tr><td>44R</td><td>Family Protection. Covers you when the at-fault driver's liability limit is too low, up to your own limit</td></tr>
+          <tr><td>47R</td><td>Optional accident benefits endorsement (new with the 2026 reform)</td></tr>
+          <tr><td>49</td><td>Agreement Not to Recover, the DCPD opt-out</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>Fault Determination Rules</b> (O. Reg. 668) set fault from diagrams, not from what drivers say. Rear-ending a car in the same lane = 100% at fault. Chain reactions and lane changes have their own rules.</li>
+        <li><b>DCPD math</b>: payment = damage × (100% − your fault %), minus any DCPD deductible. The at-fault share is paid only under Collision or All Perils, after its deductible.</li>
+        <li><b>Statutory conditions</b>: report material changes, cooperate on claims, file proof of loss on time. The insurer can cancel with <b>5 days' notice</b> delivered personally or <b>15 days</b> by registered mail. The insured can cancel any time.</li>
+        <li><b>Territory</b>: Canada, the United States and vessels travelling between ports of the two.</li>
+        <li><b>Compulsory Automobile Insurance Act</b>: every car on an Ontario road must be insured. <b>Motor Vehicle Accident Claims Fund</b>: pays victims when no insurance applies, as the last resort.</li>
+        <li><b>Take All Comers</b>: an insurer must offer coverage to anyone who meets its FSRA-approved underwriting rules.</li>
+        <li><b>Sharing economy</b>: a personal policy doesn't cover carrying paying passengers or commercial delivery unless the insurer adds coverage for it. Changes in use are material and must be reported.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>4. Home, condo and tenant policies</h3><span class="w">Habitational · 25%</span></summary><div class="body">
+      <div class="tbl"><table>
+        <thead><tr><th>Coverage</th><th>What it pays</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>Dwelling building</td></tr>
+          <tr><td>B</td><td>Detached private structures (shed, detached garage, fence)</td></tr>
+          <tr><td>C</td><td>Personal property (contents)</td></tr>
+          <tr><td>D</td><td>Additional living expense / fair rental value when the home can't be lived in</td></tr>
+          <tr><td>E</td><td>Legal liability (you're legally responsible for injury or damage to others)</td></tr>
+          <tr><td>F</td><td>Voluntary medical payments to others (paid regardless of fault)</td></tr>
+          <tr><td>G</td><td>Voluntary payment for damage to others' property</td></tr>
+          <tr><td>H</td><td>Voluntary compensation for residence employees</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>Forms</b>: <b>Basic</b> = named perils for building and contents. <b>Broad</b> = all risks on the building, named perils on contents. <b>Comprehensive</b> = all risks on both. "All risks" still has exclusions.</li>
+        <li><b>Policy types</b>: homeowners, tenants (contents + liability, no building), condo unit owners (contents, improvements, loss assessment, deductible assessment), seasonal/secondary, vacant.</li>
+        <li><b>Water</b>: sudden escape of water from plumbing is usually covered. <b>Sewer backup</b>, <b>overland water</b> (flooding from lakes, rivers, surface runoff) and <b>ground water</b> need endorsements. Sell them together, because one event often involves several causes (<b>concurrent causation</b>).</li>
+        <li><b>Special limits</b> cap jewellery, furs, cash, collectibles, bicycles and similar items, often only for theft. To insure full value, <b>schedule</b> the item.</li>
+        <li><b>Vacancy</b>: if the home is vacant more than 30 consecutive days, coverage for some perils (such as vandalism, glass breakage and water damage) is suspended. Freezing losses while the home is unheated are covered only if someone checks it as the wording requires or the water is shut off and drained.</li>
+        <li><b>Valuation</b>: actual cash value (ACV) = replacement cost minus depreciation. Replacement cost usually pays only after you actually repair or replace.</li>
+        <li><b>Material changes</b> to report: renting out part of the home, short-term rentals (Airbnb), a home-based business, renovations, wood stoves, a vacancy.</li>
+        <li><b>Recreational</b>: homeowners policies limit boats by horsepower or length and limit trailers. Bigger boats need a watercraft policy.</li>
+        <li><b>Cyber / identity theft</b> endorsements pay expenses to restore your identity and credit.</li>
+      </ul>
+      <h3>Co-insurance formula</h3>
+      <p class="formula">Payment = (Insurance carried ÷ Insurance required) × Loss<br>Insurance required = Value × Co-insurance %<br>Never more than the policy limit. If carried ≥ required, pay the full loss.</p>
+      <p>Example: home worth $500,000, 80% clause, so $400,000 required. Insured for $300,000. Loss of $40,000. Payment = 300 ÷ 400 × 40,000 = <b>$30,000</b>.</p>
+    </div></details>
+
+    <details class="lesson"><summary><h3>5. Commercial insurance</h3><span class="w">Commercial · 20%</span></summary><div class="body">
+      <ul>
+        <li><b>Who is the insured</b>: a sole proprietor is personally liable for business debts; a <b>partnership</b>'s partners are generally liable too; a <b>corporation</b> is a separate legal entity.</li>
+        <li><b>Property</b>: building, equipment, stock. Insure to rebuild value, not market value. Co-insurance clauses (often 80–90%) are common.</li>
+        <li><b>Business interruption</b>: replaces lost profit and continuing expenses while the business is shut after an insured property loss. <b>Extra expense</b> pays the extra cost of staying open (temporary premises).</li>
+        <li><b>Equipment breakdown</b> (boiler and machinery): sudden mechanical or electrical breakdown, which property forms exclude.</li>
+        <li><b>Crime</b>: employee dishonesty, money and securities, safe burglary, fraud.</li>
+        <li><b>CGL</b> (commercial general liability): A = bodily injury and property damage, B = personal and advertising injury, C = medical payments, D = tenants' legal liability (damage to premises you rent).</li>
+        <li><b>Occurrence</b> form: responds if the injury or damage happens during the policy period, whenever the claim is made. <b>Claims-made</b> form: responds if the claim is made during the policy period (after any retroactive date). Professional liability is usually claims-made.</li>
+        <li><b>Professional liability / E&amp;O</b>: errors in professional services. <b>D&amp;O</b>: directors' and officers' wrongful acts in running the company. <b>Cyber</b>: data breach, ransomware, privacy liability.</li>
+        <li><b>Builders' risk</b>: buildings under construction. <b>Surety bonds</b> have three parties: principal, obligee and surety. They guarantee performance and are not insurance for the principal.</li>
+        <li><b>Subscription policy</b>: several insurers each take a percentage of one risk and each is liable only for its share.</li>
+        <li><b>Commercial auto</b>: OAP 1 for individually rated commercial vehicles, fleets, <b>OAP 4 garage policy</b> for dealers and repair shops (customers' cars in their care). <b>SPF 6</b> covers non-owned auto liability, for employees driving their own cars on business. <b>CVOR</b> is needed for trucks over 4,500 kg and buses.</li>
+        <li><b>Certificates of insurance</b> only show that coverage exists. They don't change or add to the policy.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>6. Travel health</h3><span class="w">Travel · 5%</span></summary><div class="body">
+      <ul>
+        <li>OHIP pays only a small part of emergency costs outside Canada. Travel medical insurance covers the rest.</li>
+        <li><b>Types</b>: emergency medical, trip cancellation/interruption, baggage, single-trip vs multi-trip annual, visitors to Canada.</li>
+        <li><b>Pre-existing conditions</b>: most policies require a condition to be <b>stable</b> for a set period before departure. A medication change, new symptom or test can make it "unstable".</li>
+        <li><b>Medical questionnaires</b> must be answered accurately. A wrong answer can void coverage when you claim.</li>
+        <li><b>Claims</b>: call the assistance company before or as soon as treatment starts. Many policies limit payment if you don't.</li>
+        <li><b>Travel advisories</b>: going somewhere with a government "avoid non-essential travel" advisory already in place can exclude related claims.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>7. Working with clients and claims</h3><span class="w">All domains</span></summary><div class="body">
+      <ul>
+        <li><b>Needs analysis</b>: ask open questions first, then closed ones to confirm. Look for exposures the client didn't mention.</li>
+        <li><b>Recommend and document</b>: explain options, limits and exclusions. Disclose conflicts first. Write every recommendation and every rejected option in the file. This is your best E&amp;O defence.</li>
+        <li><b>Binding</b>: bind only within your authority, then confirm in writing to the client and insurer.</li>
+        <li><b>Renewals and changes</b>: compare old and new coverage, flag material changes, deliver documents on time.</li>
+        <li><b>Claims</b>: collect the facts and report <b>first notice of loss</b> to the insurer quickly. Explain the process. Don't promise coverage, because the adjuster decides. Advocate for the client if there's a dispute.</li>
+        <li><b>Conflict</b>: stay calm, listen, escalate to your supervisor or the insurer when needed. Clients can complain to RIBO or FSRA.</li>
+      </ul>
+    </div></details>
+
+    <details class="lesson"><summary><h3>8. Exam technique</h3><span class="w">Exam day</span></summary><div class="body">
+      <ul>
+        <li>You get 3 hours for 115 questions, about 1.5 minutes each. Flag hard questions and move on.</li>
+        <li>Read the last line of the question first ("Which is NOT…", "What would the insurer pay?").</li>
+        <li>Words like <b>ONLY</b>, <b>MUST</b> and <b>NOT</b> decide the answer. RIBO puts them in capitals.</li>
+        <li>For math questions, write the formula in the on-screen notes before entering numbers.</li>
+        <li>For "what should the broker do" questions, the right answer is usually the one that discloses, documents, reports or tells the insurer.</li>
+        <li>Fifteen pilot questions don't count. A strange question may be one of them, so don't panic.</li>
+        <li>Virtual exam: clear the desk completely, run the system check the day before. Only one 5-minute break, and the clock keeps running.</li>
+      </ul>
+    </div></details>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="view" id="v-practice" hidden>
+    <p>Original questions written to RIBO's 2025 blueprint. Practise by topic with instant explanations, or take a timed mock exam. Your progress stays in this browser.</p>
+    <div class="controls" role="group" aria-label="Mode">
+      <button class="chip" type="button" id="m-practice" aria-pressed="true">Practice by topic</button>
+      <button class="chip" type="button" id="m-mock" aria-pressed="false">Mock exam · 115 questions · 3 hours</button>
+    </div>
+    <div id="practiceUI" style="display:flex;flex-direction:column;gap:18px">
+      <div class="controls" id="filters" role="group" aria-label="Topic"></div>
+      <div class="controls">
+        <button class="btn ghost" id="restart" type="button">Shuffle and restart</button>
+        <button class="chip" type="button" id="reveal" aria-pressed="false">Show answers right away</button>
+        <span class="eyebrow" id="counter"></span>
+      </div>
+      <div class="bar" aria-hidden="true"><i id="progress"></i></div>
+      <div id="quiz"></div>
+    </div>
+    <div id="mockUI" style="display:flex;flex-direction:column;gap:14px" hidden></div>
+    <h3>Your best scores</h3>
+    <div class="score" id="scores"></div>
+  </section>
+
+  <!-- LISTEN -->
+  <section class="view" id="v-listen" hidden>
+    <p>The full audio course: 8 lessons, a glossary, memory drills and every practice question read aloud. Each track remembers where you stopped. Audio streams over the internet, so use Wi-Fi or data.</p>
+    <div class="controls">
+      <label for="speed">Speed</label>
+      <select id="speed"><option value="0.8">0.8×</option><option value="0.9">0.9×</option><option value="1" selected>1×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select>
+      <button class="chip" type="button" id="autonext" aria-pressed="true">Play next track automatically</button>
+    </div>
+    <div class="tracklist" id="tracks"></div>
+    <div class="player" id="player" hidden>
+      <div><span class="eyebrow">Now playing</span><div id="nowTitle" style="font-weight:600"></div></div>
+      <audio id="audio" controls preload="metadata"></audio>
+      <div class="rowbtns"><button class="btn ghost" type="button" id="back15">Back 15 s</button><button class="btn ghost" type="button" id="fwd30">Forward 30 s</button></div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section class="view" id="v-progress" hidden>
+    <p>Everything you answer here is remembered on this device: which questions you've seen, which you got wrong, your mock exam results and your daily study log. Nothing is sent anywhere. Use Backup to move your progress to another device.</p>
+    <div class="tiles" id="pTiles"></div>
+    <div class="rowbtns"><button class="btn" type="button" id="pReview">Review my mistakes</button><button class="btn ghost" type="button" id="pUnseen">Practise questions I haven't seen</button></div>
+    <h3>Accuracy by topic</h3>
+    <div id="pDomains" style="display:flex;flex-direction:column;gap:10px"></div>
+    <h3>Mock exam history</h3>
+    <div class="tbl"><table><thead><tr><th>Date</th><th>Score</th><th>Gen</th><th>Auto</th><th>Hab</th><th>Com</th><th>Trv</th><th>Time</th></tr></thead><tbody id="pMocks"></tbody></table></div>
+    <h3>Study log</h3>
+    <div class="tbl"><table><thead><tr><th>Day</th><th>Questions</th><th>Correct</th><th>Listened</th></tr></thead><tbody id="pLog"></tbody></table></div>
+    <h3>Backup and reset</h3>
+    <p>Your progress lives in this browser only. Save a backup file before clearing your browser or switching phones, then load it on the new device.</p>
+    <div class="rowbtns">
+      <button class="btn ghost" type="button" id="pExport">Save backup file</button>
+      <label class="btn ghost" for="pImport" style="display:inline-block">Load backup file</label>
+      <input type="file" id="pImport" accept="application/json,.json" hidden>
+      <button class="btn ghost" type="button" id="pReset">Erase my progress</button>
+    </div>
+    <p id="pMsg" class="eyebrow" role="status"></p>
+    <h3>Install on your phone</h3>
+    <p><b>Android (Chrome):</b> open the menu (⋮) and tap "Install app" or "Add to Home screen". <b>iPhone (Safari):</b> tap Share, then "Add to Home Screen". It then opens like an app and the questions work offline.</p>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="view" id="v-sources" hidden>
+    <div class="res">
+      <h2>Official RIBO</h2>
+      <ul>
+        <li><a href="https://www.ribo.com/getting-a-license/individual-licenses/new-applicants/examinations/level-1-entry-level-broker-exam/" target="_blank" rel="noopener">Level 1 exam page</a>: format, fees, self-study list</li>
+        <li><a href="https://www.ribo.com/wp-content/uploads/2025/03/Sample-Questions-RIBO-Level-1-Exam.pdf" target="_blank" rel="noopener">Official sample questions (PDF)</a>: retired real exam questions with answers. Do these in week 4.</li>
+        <li><a href="https://www.ribo.com/wp-content/uploads/2025/01/484-018_RIBO_Entry-Broker_Exam-Comp_FNL.pdf" target="_blank" rel="noopener">Competency profile and blueprint (PDF)</a>: the full syllabus. Every topic on the exam is listed here.</li>
+        <li><a href="https://www.ribo.com/wp-content/uploads/2025/01/RIBOs-Consolidated-Examinee-Resource-September-18-2024.pdf" target="_blank" rel="noopener">Consolidated Examinee Resource (PDF)</a>: OAP 1, RIB Act, regulations and By-Laws 1–3 in one file</li>
+        <li><a href="https://www.ribo.com/wp-content/uploads/2025/01/RIBO-Exam-Rules-1.pdf" target="_blank" rel="noopener">Exam rules (PDF)</a></li>
+      </ul>
+      <h2>Laws and the auto policy</h2>
+      <ul>
+        <li><a href="https://www.fsrao.ca/media/14931/download" target="_blank" rel="noopener">OAP 1, Ontario Automobile Policy (FSRA)</a></li>
+        <li><a href="https://www.fsrao.ca/industry/auto-insurance/changes-statutory-accident-benefits-coverage-ontario-july-1-2026/fsra-auto-reform-accident-benefits-optionality-qa-insurers" target="_blank" rel="noopener">FSRA: July 1, 2026 accident benefits changes</a></li>
+        <li><a href="https://www.ontario.ca/laws/regulation/100034" target="_blank" rel="noopener">Statutory Accident Benefits Schedule (O. Reg. 34/10)</a></li>
+        <li><a href="https://www.ontario.ca/laws/regulation/900668" target="_blank" rel="noopener">Fault Determination Rules (R.R.O. 1990, Reg. 668)</a></li>
+        <li><a href="https://www.ontario.ca/laws/statute/90r19" target="_blank" rel="noopener">Registered Insurance Brokers Act</a> and <a href="https://www.ontario.ca/laws/regulation/900991" target="_blank" rel="noopener">Reg. 991</a></li>
+      </ul>
+      <h2>Home, commercial and travel wordings</h2>
+      <p>Big insurers publish sample homeowners, tenants, condo and travel medical wordings for free on their websites. Search for "[insurer name] homeowners policy wording Ontario PDF" and read one of each type in full. The exam tests concepts that are common to all of them, not one company's wording.</p>
+      <h2>Booking the exam</h2>
+      <ul>
+        <li><a href="https://www.insuranceinstitute.ca/en/Licensing/Ontario/Ontario-Broker/Level-1-Broker-Exams/RIBO-Level-1---Entry-Level-Broker-Exam-2026" target="_blank" rel="noopener">Insurance Institute of Ontario</a> (in person or virtual)</li>
+        <li><a href="https://ibao.org/become-a-broker/licensing-exams" target="_blank" rel="noopener">IBAO licensing exams</a>. You can book the exam without buying IBAO's course.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Not affiliated with or endorsed by RIBO, IBAO or the Insurance Institute. Practice questions are original study material, not RIBO exam content, and the audio narration is AI-generated. Figures reflect sources checked November 2026; confirm fees and accident benefit rules with RIBO and FSRA before your exam.</footer>
+</div>
+
+<script src="questions.js"></script>
+<script src="tracks.js"></script>
+<script>
+const DOMAINS={gen:"General",auto:"Auto",hab:"Habitational",com:"Commercial",trv:"Travel"};
+
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* memory: per-question stats and a daily study log, kept in this browser */
+function qid(text){let h=5381;for(let k=0;k<text.length;k++)h=((h<<5)+h+text.charCodeAt(k))>>>0;return h.toString(36)}
+Q.forEach(q=>{q.id=qid(q.q)});
+const stats=store.get("ribo-stats",{});   // id -> {s:seen, c:correct, w:wrong, k:correct-in-a-row, l:last time}
+const log=store.get("ribo-log",{days:{},mocks:[]});
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function dayEntry(){const t=today();return log.days[t]||(log.days[t]={a:0,c:0,m:0})}
+function record(q,ok){const s=stats[q.id]||(stats[q.id]={s:0,c:0,w:0,k:0,l:0});
+  s.s++;s.l=Date.now();if(ok){s.c++;s.k++}else{s.w++;s.k=0}
+  const d=dayEntry();d.a++;if(ok)d.c++;store.set("ribo-stats",stats);store.set("ribo-log",log)}
+const needsReview=q=>{const s=stats[q.id];return s&&s.w>0&&s.k<2};
+const unseen=q=>!stats[q.id];
+
+/* tabs */
+const views=["plan","course","practice","listen","progress","sources"];
+function route(){const h=location.hash.replace("#","");const v=views.includes(h)?h:"plan";
+  views.forEach(n=>{$("#v-"+n).hidden=n!==v});
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  if(v==="progress"&&typeof renderProgress==="function")renderProgress();
+  if(v==="listen"&&typeof renderTracks==="function")renderTracks();
+  if(v==="practice"&&typeof buildFilters==="function"&&Q[0].id)buildFilters();
+}
+addEventListener("hashchange",route);
+
+/* practice */
+let topic="all",deck=[],i=0,right=0,answered=false;
+const best=store.get("ribo-best",{});
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function buildFilters(){const f=$("#filters");f.innerHTML="";
+  const nReview=Q.filter(needsReview).length,nUnseen=Q.filter(unseen).length;
+  [["all","All topics ("+Q.length+")"],...Object.entries(DOMAINS).map(([k,v])=>[k,v+" ("+Q.filter(q=>q.d===k).length+")"]),
+   ["review","My mistakes ("+nReview+")"],["unseen","Not seen yet ("+nUnseen+")"]].forEach(([k,label])=>{
+    const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=label;b.setAttribute("aria-pressed",k===topic);
+    b.onclick=()=>{topic=k;buildFilters();start()};f.appendChild(b)});}
+function pool(){if(topic==="all")return Q;if(topic==="review")return Q.filter(needsReview);if(topic==="unseen")return Q.filter(unseen);return Q.filter(q=>q.d===topic)}
+function start(){deck=shuffle(pool());i=0;right=0;
+  if(!deck.length){$("#quiz").innerHTML=`<div class="qcard"><div class="qtext">${topic==="review"?"No mistakes to review right now.":"You've seen every question."}</div><p>${topic==="review"?"A question leaves this list once you answer it right twice in a row. Practise a topic to find new ones.":"Pick a topic or review your mistakes instead."}</p></div>`;$("#counter").textContent="";$("#progress").style.width="0";return}
+  render()}
+function render(){
+  const box=$("#quiz");$("#progress").style.width=(i/deck.length*100)+"%";
+  if(i>=deck.length&&reveal){box.innerHTML=`<div class="qcard"><div class="eyebrow">Study set complete</div><div class="qtext">You read through all ${deck.length} questions with answers shown.</div><p>Turn off "Show answers right away" to test yourself and record a score.</p><div><button class="btn" type="button" id="again">Go through again</button></div></div>`;
+    $("#again").onclick=start;$("#counter").textContent="";return}
+  if(i>=deck.length){const pct=Math.round(right/deck.length*100);
+    if(!best[topic]||pct>best[topic]){best[topic]=pct;store.set("ribo-best",best)}
+    box.innerHTML=`<div class="qcard"><div class="eyebrow">Set complete</div><div class="qtext">${right} of ${deck.length} correct: <span class="${pct>=75?"pass":"fail"}">${pct}%</span></div><p>${pct>=85?"Exam-ready on this topic. Keep it fresh with a mixed set.":pct>=75?"A pass, but too close. Aim for 85% in practice before exam day.":"Below the 75% pass mark. Re-read the matching lesson and the source document, then try again."}</p><div><button class="btn" type="button" id="again">Try again</button></div></div>`;
+    $("#again").onclick=start;$("#counter").textContent="";drawScores();buildFilters();return}
+  const q=deck[i];answered=false;
+  $("#counter").textContent=`Question ${i+1} of ${deck.length} · ${right} correct`;
+  const order=shuffle([0,1,2,3]);
+  box.innerHTML=`<div class="qcard"><div class="qmeta"><span class="tag">${DOMAINS[q.d]}</span>${q.y?'<span class="tag y">2026 reform</span>':""}</div>
+    <div class="qtext"></div><div class="opts"></div><div class="fb" hidden></div></div>`;
+  box.querySelector(".qtext").textContent=q.q;
+  const opts=box.querySelector(".opts");
+  order.forEach((oi,n)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.dataset.oi=oi;
+    b.innerHTML=`<span class="k">${"ABCD"[n]}</span><span></span>`;b.lastChild.textContent=q.o[oi];
+    b.onclick=()=>pick(b,q,opts);opts.appendChild(b)});
+  if(reveal){answered=true;showAnswer(q,opts,null,false);$("#counter").textContent=`Question ${i+1} of ${deck.length} · answers shown`}
+}
+function pick(btn,q,opts){if(answered)return;answered=true;
+  const ok=+btn.dataset.oi===q.a;if(ok)right++;
+  record(q,ok);
+  showAnswer(q,opts,btn,ok);
+  $("#counter").textContent=`Question ${i+1} of ${deck.length} · ${right} correct`;
+  $("#next").focus();
+}
+function showAnswer(q,opts,btn,ok){
+  opts.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.dataset.oi===q.a)b.classList.add("right")});
+  if(btn&&!ok)btn.classList.add("wrong");
+  const fb=document.querySelector(".fb");fb.hidden=false;
+  const label=btn?(ok?"Correct.":"Not quite."):"Answer: "+q.o[q.a]+".";
+  fb.innerHTML=`<div class="explain"><b class="${btn&&!ok?"no":"ok"}"></b> <span></span></div><div style="margin-top:12px"><button class="btn" type="button" id="next">${i+1<deck.length?"Next question":(reveal?"Finish":"See score")}</button></div>`;
+  fb.querySelector(".explain b").textContent=label;
+  fb.querySelector(".explain span").textContent=q.e;
+  $("#next").onclick=()=>{i++;render()};
+}
+let reveal=!!store.get("ribo-reveal",false);
+$("#reveal").setAttribute("aria-pressed",reveal);
+$("#reveal").onclick=()=>{reveal=!reveal;store.set("ribo-reveal",reveal);$("#reveal").setAttribute("aria-pressed",reveal);start()};
+function drawScores(){const s=$("#scores");s.innerHTML="";
+  [["mock","Mock exam"],["all","All topics"],...Object.entries(DOMAINS)].forEach(([k,v])=>{const d=document.createElement("div");const p=best[k];
+    d.innerHTML=`<b class="${p==null?"":p>=75?"pass":"fail"}">${p==null?"—":p+"%"}</b><span>${v}</span>`;s.appendChild(d)});}
+$("#restart").onclick=start;
+
+/* mode switch */
+function setMode(m){$("#m-practice").setAttribute("aria-pressed",m==="practice");$("#m-mock").setAttribute("aria-pressed",m==="mock");
+  $("#practiceUI").hidden=m!=="practice";$("#mockUI").hidden=m!=="mock";if(m==="mock"&&!mock)mockIntro();}
+$("#m-practice").onclick=()=>setMode("practice");
+$("#m-mock").onclick=()=>setMode("mock");
+
+/* mock exam: 115 questions in blueprint proportions, 3-hour timer, no feedback until the end */
+const MOCK_COUNTS={gen:29,auto:29,hab:29,com:23,trv:5};
+const MOCK_MS=3*60*60*1000;
+let mock=null,tickId=null;
+function saveMock(){store.set("ribo-mock-run",mock)}
+function mockIntro(){
+  const saved=store.get("ribo-mock-run",null);
+  const box=$("#mockUI");
+  const resume=saved&&!saved.done&&saved.end>Date.now();
+  box.innerHTML=`<div class="qcard"><div class="eyebrow">Timed mock exam</div>
+    <div class="qtext">115 questions in exam proportions: 29 General, 29 Auto, 29 Habitational, 23 Commercial and 5 Travel.</div>
+    <p>You get 3 hours, the same as the real exam. You won't see answers until you finish. You can flag questions and jump back to them. On the real exam 15 of the 115 questions are unscored pilots, but this mock scores all of them. Aim for 85% here before you book.</p>
+    <div class="rowbtns"><button class="btn" type="button" id="mStart">Start a new mock exam</button>${resume?'<button class="btn ghost" type="button" id="mResume">Resume your unfinished exam</button>':""}</div></div>`;
+  $("#mStart").onclick=mockStart;
+  if(resume)$("#mResume").onclick=()=>{mock=saved;runTimer();mockRender()};
+}
+function mockStart(){
+  const ids=[];
+  Object.entries(MOCK_COUNTS).forEach(([d,n])=>{shuffle(Q.map((q,k)=>k).filter(k=>Q[k].d===d)).slice(0,n).forEach(k=>ids.push(k))});
+  const qs=shuffle(ids);
+  mock={qs,orders:qs.map(()=>shuffle([0,1,2,3])),ans:qs.map(()=>null),flags:qs.map(()=>false),cur:0,end:Date.now()+MOCK_MS,done:false,armed:false};
+  saveMock();runTimer();mockRender();
+}
+function fmt(ms){ms=Math.max(0,ms);const s=Math.floor(ms/1000);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
+function runTimer(){clearInterval(tickId);tickId=setInterval(()=>{if(!mock||mock.done){clearInterval(tickId);return}
+  const left=mock.end-Date.now();const t=$("#mTimer");if(t){t.textContent=fmt(left);t.classList.toggle("low",left<15*60*1000)}
+  if(left<=0)mockFinish();},1000)}
+function mockRender(){
+  const box=$("#mockUI");const k=mock.cur;const q=Q[mock.qs[k]];const n=mock.qs.length;
+  const answered=mock.ans.filter(a=>a!==null).length;
+  box.innerHTML=`<div class="mockhead"><span class="timer" id="mTimer">${fmt(mock.end-Date.now())}</span><span class="eyebrow">Question ${k+1} of ${n} · ${answered} answered</span></div>
+    <div class="qcard"><div class="qmeta"><span class="tag">${DOMAINS[q.d]}</span>${q.y?'<span class="tag y">2026 reform</span>':""}</div>
+    <div class="qtext"></div><div class="opts"></div>
+    <div class="rowbtns"><button class="btn ghost" type="button" id="mPrev" ${k===0?"disabled":""}>Previous</button>
+    <button class="btn ghost" type="button" id="mFlag">${mock.flags[k]?"Remove flag":"Flag for review"}</button>
+    <button class="btn" type="button" id="mNext">${k+1<n?"Next":"Review"}</button></div></div>
+    <div class="navgrid" aria-label="Jump to question"></div>
+    <div class="rowbtns"><button class="btn ghost" type="button" id="mFinish">${mock.armed?`Confirm: finish now (${n-answered} unanswered)`:"Finish exam"}</button></div>`;
+  box.querySelector(".qtext").textContent=q.q;
+  const opts=box.querySelector(".opts");
+  mock.orders[k].forEach((oi,j)=>{const b=document.createElement("button");b.type="button";b.className="opt"+(mock.ans[k]===oi?" sel":"");
+    b.innerHTML=`<span class="k">${"ABCD"[j]}</span><span></span>`;b.lastChild.textContent=q.o[oi];
+    b.onclick=()=>{mock.ans[k]=oi;mock.armed=false;saveMock();mockRender()};opts.appendChild(b)});
+  const grid=box.querySelector(".navgrid");
+  mock.qs.forEach((_,j)=>{const b=document.createElement("button");b.type="button";b.textContent=j+1;
+    b.className=(mock.ans[j]!==null?"done ":"")+(mock.flags[j]?"flag ":"")+(j===k?"cur":"");
+    b.setAttribute("aria-label",`Question ${j+1}${mock.ans[j]!==null?", answered":""}${mock.flags[j]?", flagged":""}`);
+    b.onclick=()=>{mock.cur=j;mock.armed=false;saveMock();mockRender()};grid.appendChild(b)});
+  $("#mPrev").onclick=()=>{mock.cur--;mock.armed=false;saveMock();mockRender()};
+  $("#mNext").onclick=()=>{if(k+1<n){mock.cur++;mock.armed=false;saveMock();mockRender()}else{$("#mFinish").focus()}};
+  $("#mFlag").onclick=()=>{mock.flags[k]=!mock.flags[k];saveMock();mockRender()};
+  $("#mFinish").onclick=()=>{if(mock.armed)mockFinish();else{mock.armed=true;mockRender();$("#mFinish").focus()}};
+}
+function mockFinish(){
+  clearInterval(tickId);mock.done=true;saveMock();
+  const by={};Object.keys(DOMAINS).forEach(d=>by[d]={r:0,t:0});
+  let right=0;const misses=[];
+  mock.qs.forEach((qi,k)=>{const q=Q[qi];by[q.d].t++;if(mock.ans[k]===q.a){right++;by[q.d].r++}else misses.push([q,mock.ans[k]]);
+    if(mock.ans[k]!==null)record(q,mock.ans[k]===q.a)});
+  const pct=Math.round(right/mock.qs.length*100);
+  if(!best.mock||pct>best.mock){best.mock=pct;store.set("ribo-best",best)}
+  const used=MOCK_MS-Math.max(0,mock.end-Date.now());
+  log.mocks.push({t:Date.now(),pct,used,by:Object.fromEntries(Object.entries(by).map(([d,v])=>[d,[v.r,v.t]]))});store.set("ribo-log",log);
+  const box=$("#mockUI");
+  box.innerHTML=`<div class="qcard"><div class="eyebrow">Mock exam result · time used ${fmt(used)}</div>
+    <div class="qtext">${right} of ${mock.qs.length} correct: <span class="${pct>=75?"pass":"fail"}">${pct}%</span></div>
+    <p>${pct>=85?"Exam-ready. Book the exam and keep doing a mixed set every couple of days.":pct>=75?"A pass, but too close for comfort. Re-study your weakest domain below and take another mock.":"Below the 75% pass mark. Re-read the lessons for your two weakest domains and the source documents, then try again."}</p>
+    <div class="score" id="mDom"></div>
+    <div class="rowbtns"><button class="btn" type="button" id="mAgain">Take another mock exam</button></div></div>
+    <h3>Questions you missed (${misses.length})</h3><div id="mMiss" style="display:flex;flex-direction:column;gap:12px"></div>`;
+  const dom=$("#mDom");Object.entries(by).forEach(([d,v])=>{const p=v.t?Math.round(v.r/v.t*100):0;const el=document.createElement("div");
+    el.innerHTML=`<b class="${p>=75?"pass":"fail"}">${p}%</b><span>${DOMAINS[d]} · ${v.r}/${v.t}</span>`;dom.appendChild(el)});
+  const mm=$("#mMiss");misses.forEach(([q,a])=>{const el=document.createElement("div");el.className="miss";
+    el.innerHTML=`<span class="tag">${DOMAINS[q.d]}</span><b class="mq"></b><span class="yours"></span><span class="corr"></span><span class="ex"></span>`;
+    el.querySelector(".mq").textContent=q.q;
+    el.querySelector(".yours").textContent="Your answer: "+(a===null?"(no answer)":q.o[a]);
+    el.querySelector(".corr").textContent="Correct: "+q.o[q.a];
+    el.querySelector(".ex").textContent=q.e;mm.appendChild(el)});
+  $("#mAgain").onclick=mockStart;drawScores();
+}
+
+/* ---------- my progress ---------- */
+function pctTxt(c,t){return t?Math.round(c/t*100)+"%":"—"}
+function streakDays(){let n=0;const d=new Date();for(;;){const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const e=log.days[k];if(e&&(e.a>0||e.m>=60)){n++;d.setDate(d.getDate()-1)}else if(n===0&&k===today()){d.setDate(d.getDate()-1)}else break}return n}
+function renderProgress(){
+  let att=0,cor=0,seen=0;Q.forEach(q=>{const s=stats[q.id];if(s){seen++;att+=s.s;cor+=s.c}});
+  const nReview=Q.filter(needsReview).length;
+  const lastMock=log.mocks.length?log.mocks[log.mocks.length-1].pct+"%":"—";
+  $("#pTiles").innerHTML=[[`${seen}/${Q.length}`,"questions seen"],[pctTxt(cor,att),"accuracy (all answers)"],[nReview,"mistakes to review"],[lastMock,"last mock exam"],[(n=>n+(n===1?" day":" days"))(streakDays()),"study streak"]]
+    .map(([b,s])=>`<div><b>${b}</b><span>${s}</span></div>`).join("");
+  const dom=$("#pDomains");dom.innerHTML="";
+  Object.entries(DOMAINS).forEach(([d,name])=>{let a=0,c=0,sn=0;const all=Q.filter(q=>q.d===d);all.forEach(q=>{const s=stats[q.id];if(s){sn++;a+=s.s;c+=s.c}});
+    const p=a?Math.round(c/a*100):0;const el=document.createElement("div");el.className="dombar";
+    el.innerHTML=`<span>${name}</span><span class="track" title="${sn} of ${all.length} seen"><i class="${a&&p<75?"low":""}" style="width:${p}%"></i></span><span class="num">${a?p+"%":"—"} <small>${sn}/${all.length}</small></span>`;dom.appendChild(el)});
+  const ab={gen:"gen",auto:"auto",hab:"hab",com:"com",trv:"trv"};
+  $("#pMocks").innerHTML=log.mocks.length?log.mocks.slice().reverse().map(m=>`<tr><td>${new Date(m.t).toLocaleDateString()}</td><td class="${m.pct>=75?"pass":"fail"}">${m.pct}%</td>${Object.keys(ab).map(d=>`<td>${m.by[d]?pctTxt(m.by[d][0],m.by[d][1]):"—"}</td>`).join("")}<td>${fmt(m.used)}</td></tr>`).join("")
+    :`<tr><td colspan="8">No mock exams yet. Take one on the Practice tab.</td></tr>`;
+  const days=Object.keys(log.days).sort().reverse().slice(0,30);
+  $("#pLog").innerHTML=days.length?days.map(k=>{const e=log.days[k];return `<tr><td>${k}</td><td>${e.a}</td><td>${pctTxt(e.c,e.a)}</td><td>${Math.round((e.m||0)/60)} min</td></tr>`}).join("")
+    :`<tr><td colspan="4">Nothing logged yet. Answer some questions or play a track.</td></tr>`;
+}
+$("#pReview").onclick=()=>{topic="review";location.hash="#practice";setMode("practice");buildFilters();start()};
+$("#pUnseen").onclick=()=>{topic="unseen";location.hash="#practice";setMode("practice");buildFilters();start()};
+$("#pExport").onclick=()=>{const data={app:"ribo-prep",v:1,saved:new Date().toISOString(),stats,log,best,listen:store.get("ribo-listen",{})};
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"}));a.download=`ribo-progress-${today()}.json`;document.body.appendChild(a);a.click();a.remove();
+  $("#pMsg").textContent="Backup saved to your downloads."};
+$("#pImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{const d=JSON.parse(t);if(d.app!=="ribo-prep")throw new Error();
+  store.set("ribo-stats",d.stats||{});store.set("ribo-log",d.log||{days:{},mocks:[]});store.set("ribo-best",d.best||{});store.set("ribo-listen",d.listen||{});location.reload()})
+  .catch(()=>{$("#pMsg").textContent="That file isn't a RIBO Prep backup."})};
+let resetArmed=false;
+$("#pReset").onclick=()=>{if(!resetArmed){resetArmed=true;$("#pReset").textContent="Tap again to erase everything";$("#pMsg").textContent="This deletes all answers, logs and scores on this device.";return}
+  ["ribo-stats","ribo-log","ribo-best","ribo-listen","ribo-mock-run"].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.reload()};
+
+/* ---------- listen ---------- */
+const listen=store.get("ribo-listen",{});   // file -> {p: seconds, d: done}
+const audio=$("#audio");let curTrack=null,lastTick=0;
+function fmtMin(s){s=Math.round(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function renderTracks(){const box=$("#tracks");box.innerHTML="";
+  let group="";TRACKS.forEach((t,k)=>{if(t.g!==group){group=t.g;const h=document.createElement("h3");h.textContent=group;box.appendChild(h)}
+    const st=listen[t.f]||{};const b=document.createElement("button");b.type="button";b.className="trk"+(curTrack===k?" cur":"");
+    const done=st.d?" · done":st.p?` · ${fmtMin(st.p)} played`:"";
+    b.innerHTML=`<span class="t"></span><small>${fmtMin(t.s)}${done}</small><span class="pbar"><i style="width:${st.d?100:Math.min(100,(st.p||0)/t.s*100)}%"></i></span>`;
+    b.querySelector(".t").textContent=t.n;b.onclick=()=>play(k);box.appendChild(b)});}
+function play(k){const t=TRACKS[k];curTrack=k;$("#player").hidden=false;$("#nowTitle").textContent=t.n;
+  audio.src="audio/"+t.f;audio.playbackRate=+$("#speed").value;
+  const st=listen[t.f];audio.onloadedmetadata=()=>{if(st&&st.p&&!st.d&&st.p<t.s-5)audio.currentTime=st.p;audio.playbackRate=+$("#speed").value};
+  audio.play().catch(()=>{});
+  if("mediaSession" in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:t.n,artist:"RIBO Level 1 audio course",album:"RIBO Prep",artwork:[{src:"icons/icon-512.png",sizes:"512x512",type:"image/png"}]});
+    navigator.mediaSession.setActionHandler("seekbackward",()=>{audio.currentTime-=15});navigator.mediaSession.setActionHandler("seekforward",()=>{audio.currentTime+=30});
+    navigator.mediaSession.setActionHandler("nexttrack",()=>{if(k+1<TRACKS.length)play(k+1)});navigator.mediaSession.setActionHandler("previoustrack",()=>{if(k>0)play(k-1)})}
+  renderTracks()}
+audio.ontimeupdate=()=>{if(curTrack===null)return;const t=TRACKS[curTrack];const now=Date.now();
+  if(now-lastTick>=5000){if(lastTick&&!audio.paused){dayEntry().m+=Math.min(10,(now-lastTick)/1000);store.set("ribo-log",log)}
+    lastTick=now;listen[t.f]={p:Math.floor(audio.currentTime),d:(listen[t.f]||{}).d||false};store.set("ribo-listen",listen)}};
+audio.onpause=()=>{lastTick=0};
+audio.onended=()=>{const t=TRACKS[curTrack];listen[t.f]={p:0,d:true};store.set("ribo-listen",listen);renderTracks();
+  if($("#autonext").getAttribute("aria-pressed")==="true"&&curTrack+1<TRACKS.length)play(curTrack+1)};
+$("#speed").value=String(store.get("ribo-speed","1"));
+$("#speed").onchange=()=>{audio.playbackRate=+$("#speed").value;store.set("ribo-speed",$("#speed").value)};
+$("#autonext").onclick=()=>{const on=$("#autonext").getAttribute("aria-pressed")!=="true";$("#autonext").setAttribute("aria-pressed",on)};
+$("#back15").onclick=()=>{audio.currentTime=Math.max(0,audio.currentTime-15)};
+$("#fwd30").onclick=()=>{audio.currentTime+=30};
+
+buildFilters();start();drawScores();route();
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
+
