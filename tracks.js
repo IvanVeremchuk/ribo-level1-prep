@@ -55,6 +55,30 @@ const TRACKS=[
 "s": 285
 },
 {
+"f": "23-document-auto-policy.mp3",
+"n": "The auto policy (OAP 1) and all endorsements",
+"g": "Document walkthroughs",
+"s": 425
+},
+{
+"f": "24-document-home-policy.mp3",
+"n": "The home policy, part by part",
+"g": "Document walkthroughs",
+"s": 441
+},
+{
+"f": "25-document-commercial-policies.mp3",
+"n": "Commercial policies, part by part",
+"g": "Document walkthroughs",
+"s": 454
+},
+{
+"f": "26-document-broker-rules.mp3",
+"n": "The broker rules: Act, Regulation 991, By-Law 3",
+"g": "Document walkthroughs",
+"s": 310
+},
+{
 "f": "09-glossary.mp3",
 "n": "Glossary of abbreviations and names",
 "g": "Glossary and memory drills",
@@ -82,60 +106,60 @@ const TRACKS=[
 "f": "10-questions-general.mp3",
 "n": "General questions (41)",
 "g": "Practice questions",
-"s": 1598
+"s": 2713
 },
 {
 "f": "11-questions-auto.mp3",
 "n": "Auto questions (47)",
 "g": "Practice questions",
-"s": 1962
+"s": 3476
 },
 {
 "f": "12-questions-habitational.mp3",
 "n": "Habitational questions (37)",
 "g": "Practice questions",
-"s": 1548
+"s": 2662
 },
 {
 "f": "13-questions-commercial.mp3",
 "n": "Commercial questions (47)",
 "g": "Practice questions",
-"s": 1848
+"s": 3256
 },
 {
 "f": "14-questions-travel.mp3",
 "n": "Travel questions (12)",
 "g": "Practice questions",
-"s": 883
+"s": 915
 },
 {
 "f": "15-more-questions-general.mp3",
 "n": "More general questions (60)",
 "g": "More practice questions",
-"s": 2456
+"s": 3996
 },
 {
 "f": "16-more-questions-auto.mp3",
 "n": "More auto questions (77)",
 "g": "More practice questions",
-"s": 3470
+"s": 5944
 },
 {
 "f": "17-more-questions-habitational.mp3",
 "n": "More habitational questions (59)",
 "g": "More practice questions",
-"s": 2319
+"s": 4027
 },
 {
 "f": "18-more-questions-commercial.mp3",
 "n": "More commercial questions (90)",
 "g": "More practice questions",
-"s": 3876
+"s": 6533
 },
 {
 "f": "19-more-questions-travel.mp3",
 "n": "More travel questions (20)",
 "g": "More practice questions",
-"s": 807
+"s": 1321
 }
 ];

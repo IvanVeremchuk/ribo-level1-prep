@@ -1,5 +1,5 @@
 // Offline support: keeps the app and question bank on the phone. Audio streams from the network.
-const CACHE = "ribo-prep-v1";
+const CACHE = "ribo-prep-v2";
 const SHELL = ["./", "index.html", "questions.js", "tracks.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -15,7 +15,7 @@ self.addEventListener("fetch", e => {
   if (e.request.method !== "GET" || url.origin !== location.origin || url.pathname.includes("/audio/")) return;
   // Network first so updates arrive quickly; fall back to the cached copy when offline.
   e.respondWith(
-    fetch(e.request).then(res => {
+    fetch(e.request, { cache: "no-cache" }).then(res => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
       return res;
     }).catch(() => caches.match(e.request).then(r => r || caches.match("index.html")))

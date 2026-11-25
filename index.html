@@ -52,6 +52,43 @@ img{max-width:100%}
 .player{position:sticky;bottom:env(safe-area-inset-bottom,0px);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;z-index:4}
 .player audio{width:100%}
 select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+/* map tab: one hue per exam topic */
+:root{--c-gen:#3b5bdb;--c-auto:#c2410c;--c-hab:#0d6b67;--c-com:#7c3aed;--c-trv:#b45309}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c-gen:#8ea4ff;--c-auto:#ff9a6a;--c-hab:#4cc3b8;--c-com:#b99aff;--c-trv:#f2b45f}}
+:root[data-theme="dark"]{--c-gen:#8ea4ff;--c-auto:#ff9a6a;--c-hab:#4cc3b8;--c-com:#b99aff;--c-trv:#f2b45f}
+.maproot{align-self:center;text-align:center;background:var(--ink);color:var(--paper);border-radius:12px;padding:12px 20px;display:flex;flex-direction:column;gap:2px}
+.maproot b{font:700 18px var(--display)} .maproot span{font-size:13px;opacity:.8}
+.branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;position:relative}
+.branch{--c:var(--accent);background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.d-gen{--c:var(--c-gen)} .d-auto{--c:var(--c-auto)} .d-hab{--c:var(--c-hab)} .d-com{--c:var(--c-com)} .d-trv{--c:var(--c-trv)}
+.branch .bh{display:flex;justify-content:space-between;align-items:baseline}
+.branch .bh b{font:700 18px var(--display);color:var(--c)} .branch .w{font:600 14px var(--mono);color:var(--c)}
+.wbar{height:5px;background:var(--line);border-radius:3px;overflow:hidden}.wbar i{display:block;height:100%;background:var(--c);transform-origin:left;width:0}
+.wbar i{min-width:0}
+.grp h4{margin:0 0 2px;font:600 13px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.grp p{font-size:15px;line-height:1.45}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto}
+.diagram svg{display:block;width:100%;min-width:560px;height:auto}
+.diagram .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.diagram .bld{fill:var(--accent-soft);stroke:var(--ink);stroke-width:2}
+.diagram .bld2{fill:var(--paper);stroke:var(--muted);stroke-width:2;stroke-dasharray:5 4}
+.diagram .roof{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.diagram .door{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.diagram .win rect,.diagram .win1{fill:var(--card);stroke:var(--muted);stroke-width:1.5}
+.diagram .item{fill:var(--c-com);opacity:.75}
+.diagram .person{stroke:var(--ink);stroke-width:2.5;fill:var(--card);stroke-linecap:round}
+.diagram .car1{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5}
+.diagram .car2{fill:var(--paper);stroke:var(--ink);stroke-width:2.5}
+.diagram .ghost{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:6 5}
+.diagram .wheel{fill:var(--ink)}
+.diagram .badge circle{fill:var(--accent)} .diagram .badge text{fill:var(--card);font:700 15px var(--display);text-anchor:middle}
+.diagram .lbl{fill:var(--ink);font:700 14px var(--body)} .diagram .sub{fill:var(--muted);font:500 13px var(--body)}
+.legend{display:flex;flex-direction:column;gap:6px}
+.legend div{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:baseline;font-size:15.5px}
+.bdg{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--card);font:700 13px var(--display)}
+.cgl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.cgl div{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c-com);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.cgl b{font:800 22px var(--display);color:var(--c-com)} .cgl span{font-weight:600} .cgl small{color:var(--muted)}
 body{background:var(--paper);color:var(--ink);font:17px/1.55 var(--body);}
 .wrap{max-width:860px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
@@ -149,12 +186,13 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="fact"><b>3 hours</b><span>multiple choice only</span></div>
     <div class="fact"><b>75%</b><span>to pass (75 of 100)</span></div>
     <div class="fact"><b>$325</b><span>per attempt, paid to IIO or IBAO</span></div>
-    <div class="fact"><b>Closed book</b><span>only on-screen calculator and notes</span></div>
+    <div class="fact"><b>Reference on screen</b><span>RIBO's Consolidated Examinee Resource and a calculator</span></div>
   </div>
 
   <nav class="tabs" aria-label="Sections">
     <a href="#plan">Study plan</a>
     <a href="#course">Course</a>
+    <a href="#map">Map</a>
     <a href="#practice">Practice</a>
     <a href="#listen">Listen</a>
     <a href="#progress">My progress</a>
@@ -446,6 +484,143 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="score" id="scores"></div>
   </section>
 
+  <!-- MAP -->
+  <section class="view" id="v-map" hidden>
+    <p>The whole exam on one screen. Each topic shows its share of the exam and the things you need to know inside it. Below are pictures of the home policy and the auto policy, so you can see which coverage pays for what.</p>
+
+    <div class="maproot"><b>RIBO Level 1 exam</b><span>100 scored questions · 75% to pass</span></div>
+    <div class="branches">
+      <div class="branch d-gen"><div class="bh"><b>General</b><span class="w">25%</span></div><div class="wbar"><i style="width:25%"></i></div>
+        <div class="grp"><h4>Principles</h4><p>Indemnity · Insurable interest · Utmost good faith · Subrogation · Contribution · Proximate cause · Peril vs hazard (physical, moral)</p></div>
+        <div class="grp"><h4>The market</h4><p>Broker vs agent vs direct writer · Stock vs mutual · Lloyd's · MGA · Reinsurance · Facility Association · Loss ratio</p></div>
+        <div class="grp"><h4>Regulators</h4><p>RIBO (brokers) · FSRA (insurers, auto rates) · CCIR (fair treatment) · CISRO (intermediary code)</p></div>
+        <div class="grp"><h4>Broker rules</h4><p>Level 1 = supervised · Trust account for premiums · Disclose conflicts · No tied selling · No negative option billing · PIPEDA · CASL · E&amp;O · CE every year</p></div>
+      </div>
+      <div class="branch d-auto"><div class="bh"><b>Auto</b><span class="w">25%</span></div><div class="wbar"><i style="width:25%"></i></div>
+        <div class="grp"><h4>OAP 1 sections</h4><p>3 Liability · 4 Accident benefits · 5 Uninsured auto · 6 DCPD · 7 Your car (collision, comprehensive, all perils, specified perils)</p></div>
+        <div class="grp"><h4>Endorsements (OPCF)</h4><p>Who: 28, 28A · Value: 19, 19A, 40, 43 · Use: 5, 16/17, 20, 27, 27B · Protection: 23A, 39, 44R, 47R, 49</p></div>
+        <div class="grp"><h4>Rules and math</h4><p>Fault Determination Rules · DCPD = damage × % not at fault · Statutory conditions (5 / 15 days notice, 90-day proof of loss)</p></div>
+        <div class="grp"><h4>Laws and 2026 changes</h4><p>$200,000 minimum · Only medical, rehab, attendant care mandatory ($65K / $1M) · CAIA · MVACF · Take All Comers</p></div>
+      </div>
+      <div class="branch d-hab"><div class="bh"><b>Habitational</b><span class="w">25%</span></div><div class="wbar"><i style="width:25%"></i></div>
+        <div class="grp"><h4>Forms</h4><p>Basic (named perils) · Broad (all risks building, named contents) · Comprehensive (all risks both)</p></div>
+        <div class="grp"><h4>Policy types</h4><p>Homeowners · Tenant (no building) · Condo unit owner (betterments, loss assessment) · Seasonal / secondary</p></div>
+        <div class="grp"><h4>Coverages A to H</h4><p>A Dwelling · B Detached structures · C Contents · D Living expense · E Liability · F Medical · G Property damage · H Residence employees</p></div>
+        <div class="grp"><h4>Watch-outs</h4><p>Water trio: sewer, overland, ground · Special limits → schedule · RC vs ACV · Co-insurance · Vacancy 30 days · Material changes</p></div>
+      </div>
+      <div class="branch d-com"><div class="bh"><b>Commercial</b><span class="w">20%</span></div><div class="wbar"><i style="width:20%"></i></div>
+        <div class="grp"><h4>Property side</h4><p>Building · Equipment · Stock · Co-insurance · Blanket · Business interruption · Extra expense · Equipment breakdown · Crime</p></div>
+        <div class="grp"><h4>Liability side</h4><p>CGL: A Injury &amp; damage · B Personal &amp; advertising · C Medical · D Tenants' legal liability · Products-completed operations · Umbrella</p></div>
+        <div class="grp"><h4>Professional and cyber</h4><p>Occurrence vs claims-made · Retro date · Tail · E&amp;O · D&amp;O · Employment practices · Cyber (first- and third-party)</p></div>
+        <div class="grp"><h4>Auto and specialty</h4><p>OAP 1 / fleet · OAP 4 garage · SPF 6 non-owned · OPCF 27B · CVOR · Builders' risk · Floaters · Cargo · Bonds · Trade credit</p></div>
+      </div>
+      <div class="branch d-trv"><div class="bh"><b>Travel</b><span class="w">5%</span></div><div class="wbar"><i style="width:5%"></i></div>
+        <div class="grp"><h4>Products</h4><p>Emergency medical · Trip cancellation · Trip interruption · Baggage · Single vs multi-trip · Top-up · Visitors to Canada</p></div>
+        <div class="grp"><h4>Watch-outs</h4><p>Pre-existing conditions &amp; stability period · Medical questionnaire · Call assistance first · Advisories · OHIP 212 days</p></div>
+      </div>
+    </div>
+
+    <h2>The home policy: who pays for what</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 660 330" role="img" aria-labelledby="houseT houseD" xmlns="http://www.w3.org/2000/svg">
+        <title id="houseT">Home insurance coverages A to H</title>
+        <desc id="houseD">A house is Coverage A, the detached garage and fence are Coverage B, belongings inside are Coverage C, a hotel stay after a fire is Coverage D, and an injured guest is Coverage E and F.</desc>
+        <line x1="10" y1="292" x2="650" y2="292" class="ln"/>
+        <!-- hotel (D) -->
+        <rect x="24" y="120" width="92" height="172" class="bld2"/>
+        <g class="win"><rect x="38" y="138" width="18" height="18"/><rect x="84" y="138" width="18" height="18"/><rect x="38" y="174" width="18" height="18"/><rect x="84" y="174" width="18" height="18"/><rect x="38" y="210" width="18" height="18"/><rect x="84" y="210" width="18" height="18"/></g>
+        <rect x="58" y="250" width="24" height="42" class="door"/>
+        <text x="70" y="112" class="lbl" text-anchor="middle">Hotel</text>
+        <!-- house (A) -->
+        <polygon points="160,170 280,88 400,170" class="roof"/>
+        <rect x="176" y="170" width="208" height="122" class="bld"/>
+        <rect x="266" y="226" width="30" height="66" class="door"/>
+        <rect x="194" y="192" width="44" height="34" class="win1"/>
+        <rect x="322" y="192" width="44" height="34" class="win1"/>
+        <!-- contents (C): sofa + tv seen in window -->
+        <rect x="198" y="250" width="50" height="20" rx="4" class="item"/><rect x="198" y="240" width="10" height="30" rx="3" class="item"/><rect x="238" y="240" width="10" height="30" rx="3" class="item"/>
+        <rect x="320" y="246" width="40" height="26" rx="2" class="item"/>
+        <!-- detached garage (B) + fence -->
+        <polygon points="430,214 485,176 540,214" class="roof"/>
+        <rect x="440" y="214" width="90" height="78" class="bld"/>
+        <rect x="455" y="236" width="60" height="56" class="door"/>
+        <g class="ln"><line x1="560" y1="250" x2="640" y2="250"/><line x1="560" y1="272" x2="640" y2="272"/><line x1="566" y1="242" x2="566" y2="292"/><line x1="590" y1="242" x2="590" y2="292"/><line x1="614" y1="242" x2="614" y2="292"/><line x1="638" y1="242" x2="638" y2="292"/></g>
+        <!-- guest slipping (E/F) -->
+        <g class="person"><circle cx="420" cy="262" r="6"/><line x1="420" y1="268" x2="412" y2="284"/><line x1="412" y1="284" x2="400" y2="290"/><line x1="412" y1="284" x2="424" y2="292"/><line x1="417" y1="274" x2="404" y2="270"/><line x1="417" y1="274" x2="430" y2="268"/></g>
+        <!-- badges -->
+        <g class="badge"><circle cx="280" cy="64" r="15"/><text x="280" y="69">A</text></g>
+        <text x="300" y="58" class="lbl">Dwelling</text><text x="300" y="74" class="sub">house + attached garage, deck</text>
+        <g class="badge"><circle cx="485" cy="150" r="15"/><text x="485" y="155">B</text></g>
+        <text x="505" y="146" class="lbl">Detached</text><text x="505" y="162" class="sub">garage, shed, fence</text>
+        <g class="badge"><circle cx="222" cy="312" r="13"/><text x="222" y="317">C</text></g>
+        <text x="240" y="317" class="sub">belongings inside (contents)</text>
+        <g class="badge"><circle cx="70" cy="82" r="15"/><text x="70" y="87">D</text></g>
+        <text x="20" y="54" class="sub">extra living cost</text><text x="20" y="40" class="lbl">If home unlivable</text>
+        <g class="badge"><circle cx="422" cy="236" r="13"/><text x="422" y="241">E</text></g>
+        <g class="badge"><circle cx="446" cy="312" r="13"/><text x="446" y="317">F</text></g>
+        <text x="464" y="317" class="sub">guest hurt: E if liable, F regardless</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><span class="bdg">A</span>Dwelling: the house and anything attached to it.</div>
+      <div><span class="bdg">B</span>Detached private structures: detached garage, shed, fence.</div>
+      <div><span class="bdg">C</span>Personal property: your belongings, home or temporarily away.</div>
+      <div><span class="bdg">D</span>Additional living expense / fair rental value while the home can't be lived in.</div>
+      <div><span class="bdg">E</span>Legal liability: you're legally responsible for injury or damage to others.</div>
+      <div><span class="bdg">F</span>Voluntary medical payments to others, regardless of fault.</div>
+      <div><span class="bdg">G</span>Voluntary payment for damage to others' property.</div>
+      <div><span class="bdg">H</span>Voluntary compensation for residence employees (nanny, housekeeper).</div>
+    </div>
+    <p class="note"><b>Deductible:</b> applies to A to D (property), not E to H (liability). <b>Tenants</b> have no A. <b>Condo owners</b> insure upgrades (betterments) and loss assessment; the corporation insures the building.</p>
+
+    <h2>The auto policy: who pays for what</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 660 300" role="img" aria-labelledby="carT carD" xmlns="http://www.w3.org/2000/svg">
+        <title id="carT">Ontario Automobile Policy sections 3 to 7</title>
+        <desc id="carD">Your car with sections 4, 6 and 7, another driver and a pedestrian under section 3, and an uninsured or hit and run car under section 5.</desc>
+        <line x1="10" y1="236" x2="650" y2="236" class="ln"/>
+        <!-- your car -->
+        <path d="M60 210 L80 176 L180 168 L220 190 L250 192 L250 216 L60 216 Z" class="car1"/>
+        <circle cx="95" cy="218" r="16" class="wheel"/><circle cx="215" cy="218" r="16" class="wheel"/>
+        <g class="person"><circle cx="150" cy="182" r="6"/></g>
+        <text x="150" y="268" class="lbl" text-anchor="middle">Your car</text>
+        <!-- other car -->
+        <path d="M400 210 L420 176 L520 168 L560 190 L590 192 L590 216 L400 216 Z" class="car2"/>
+        <circle cx="435" cy="218" r="16" class="wheel"/><circle cx="555" cy="218" r="16" class="wheel"/>
+        <text x="495" y="268" class="lbl" text-anchor="middle">Someone else</text>
+        <!-- pedestrian -->
+        <g class="person"><circle cx="620" cy="160" r="7"/><line x1="620" y1="167" x2="620" y2="196"/><line x1="620" y1="196" x2="610" y2="220"/><line x1="620" y1="196" x2="630" y2="220"/><line x1="620" y1="176" x2="608" y2="188"/><line x1="620" y1="176" x2="632" y2="188"/></g>
+        <!-- ghost uninsured car -->
+        <path d="M290 120 L304 98 L372 92 L398 106 L418 108 L418 126 L290 126 Z" class="ghost"/>
+        <text x="354" y="146" class="sub" text-anchor="middle">uninsured or hit and run</text>
+        <!-- badges -->
+        <g class="badge"><circle cx="150" cy="150" r="15"/><text x="150" y="155">4</text></g>
+        <text x="150" y="124" class="sub" text-anchor="middle">4 = your injuries, no-fault</text>
+        <g class="badge"><circle cx="100" cy="150" r="15"/><text x="100" y="155">6</text></g>
+        <g class="badge"><circle cx="200" cy="150" r="15"/><text x="200" y="155">7</text></g>
+        <g class="badge"><circle cx="495" cy="150" r="15"/><text x="495" y="155">3</text></g>
+        <g class="badge"><circle cx="620" cy="130" r="15"/><text x="620" y="135">3</text></g>
+        <text x="440" y="110" class="sub">injury or damage you cause</text>
+        <g class="badge"><circle cx="354" cy="72" r="15"/><text x="354" y="77">5</text></g>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><span class="bdg">3</span>Third party liability: injury or damage you cause to other people and their property. Minimum $200,000.</div>
+      <div><span class="bdg">4</span>Accident benefits: your own injuries, whoever caused the accident. Medical, rehab, attendant care are mandatory.</div>
+      <div><span class="bdg">5</span>Uninsured automobile: injury from uninsured or hit-and-run drivers; car damage only if the driver is identified.</div>
+      <div><span class="bdg">6</span>DCPD: your own insurer pays your car damage for the part you didn't cause (Ontario collisions with another insured car).</div>
+      <div><span class="bdg">7</span>Loss or damage to your car: collision, comprehensive, all perils or specified perils. Pays the at-fault part and non-collision losses.</div>
+    </div>
+
+    <h2>Commercial liability (CGL) in four boxes</h2>
+    <div class="cgl">
+      <div><b>A</b><span>Bodily injury &amp; property damage to others</span><small>customer slips; contractor damages a car</small></div>
+      <div><b>B</b><span>Personal &amp; advertising injury</span><small>false arrest, libel, slander, ad copying</small></div>
+      <div><b>C</b><span>Medical payments</span><small>small bills, regardless of fault</small></div>
+      <div><b>D</b><span>Tenants' legal liability</span><small>tenant damages the rented premises</small></div>
+    </div>
+  </section>
+
   <!-- LISTEN -->
   <section class="view" id="v-listen" hidden>
     <p>The full audio course: 8 lessons, a glossary, memory drills and every practice question read aloud. Each track remembers where you stopped. Audio streams over the internet, so use Wi-Fi or data.</p>
@@ -518,8 +693,8 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
   <footer>Not affiliated with or endorsed by RIBO, IBAO or the Insurance Institute. Practice questions are original study material, not RIBO exam content, and the audio narration is AI-generated. Figures reflect sources checked November 2026; confirm fees and accident benefit rules with RIBO and FSRA before your exam.</footer>
 </div>
 
-<script src="questions.js"></script>
-<script src="tracks.js"></script>
+<script src="questions.js?v=3"></script>
+<script src="tracks.js?v=3"></script>
 <script>
 const DOMAINS={gen:"General",auto:"Auto",hab:"Habitational",com:"Commercial",trv:"Travel"};
 
@@ -540,7 +715,7 @@ const needsReview=q=>{const s=stats[q.id];return s&&s.w>0&&s.k<2};
 const unseen=q=>!stats[q.id];
 
 /* tabs */
-const views=["plan","course","practice","listen","progress","sources"];
+const views=["plan","course","map","practice","listen","progress","sources"];
 function route(){const h=location.hash.replace("#","");const v=views.includes(h)?h:"plan";
   views.forEach(n=>{$("#v-"+n).hidden=n!==v});
   document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
