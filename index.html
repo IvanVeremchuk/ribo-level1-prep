@@ -67,8 +67,51 @@ select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--lin
 .wbar i{min-width:0}
 .grp h4{margin:0 0 2px;font:600 13px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .grp p{font-size:15px;line-height:1.45}
-.diagram{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto}
-.diagram svg{display:block;width:100%;min-width:560px;height:auto}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;overflow:hidden}
+.diagram svg{display:block;width:100%;height:auto}
+.mh{border-top:1px solid var(--line);padding-top:16px;margin-top:8px}
+.cap{color:var(--muted);font-size:15px}
+.diagram .headc{fill:var(--ink)}
+:is(.diagram,.faults) .road{fill:var(--line)} :is(.diagram,.faults) .curb{fill:var(--muted)}
+:is(.diagram,.faults) .lane{stroke:var(--card);stroke-width:2;stroke-dasharray:8 6}
+:is(.diagram,.faults) .carA{fill:var(--c-auto)} :is(.diagram,.faults) .carB{fill:var(--muted)}
+:is(.diagram,.faults) .ctxt{fill:var(--card);font:700 13px var(--display)}
+:is(.diagram,.faults) .arr{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:4 4}
+.diagram .soil{fill:var(--line)} .diagram .bsmt{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.diagram .pipe{fill:none;stroke:var(--muted);stroke-width:5;stroke-linecap:round}
+.diagram .spray,.diagram .arr2{fill:none;stroke:var(--c-gen);stroke-width:3;stroke-linecap:round}
+.diagram .flood{fill:var(--c-gen);opacity:.7}
+.diagram .period{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.diagram .ptxt{fill:var(--accent);font:700 13px var(--body)}
+.diagram .evt circle{fill:var(--c-auto)} .diagram .evt2 circle{fill:var(--c-com)}
+.diagram .retro{stroke:var(--bad);stroke-width:2.5;stroke-dasharray:5 4}
+.diagram .okt{fill:var(--ok);font:700 14px var(--body)}
+.diagram .node{fill:var(--paper);stroke:var(--ink);stroke-width:2} .diagram .node2{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.diagram .arrl{stroke:var(--ink);stroke-width:2} .diagram .ahd{fill:var(--ink)}
+.split{display:flex;min-height:38px;border-radius:8px;overflow:hidden;font:700 14px var(--body)}
+.split span{display:flex;align-items:center;justify-content:center;text-align:center;padding:4px 6px;color:var(--card);min-width:0}
+.s-ok{background:var(--ok)} .s-warn{background:var(--c-trv)} .s-bad{background:var(--bad)}
+.splitkey{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.splitkey > span{display:block;padding-left:22px;text-indent:-22px}
+.splitkey i{width:12px;height:12px;border-radius:3px;display:inline-block;margin-right:10px;vertical-align:-1px;text-indent:0}
+.faults{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0}
+.faults figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.faults svg{width:100%;height:auto;display:block}
+.faults figcaption{font-size:14.5px;line-height:1.35}
+.forms{display:grid;grid-template-columns:minmax(70px,auto) repeat(3,1fr);gap:6px;align-items:center}
+.forms .fh{font:700 14px var(--display);text-align:center} .forms .fr{font-weight:600;font-size:15px}
+.forms > div:not(.fh):not(.fr){text-align:center}
+.pill{display:inline-block;border-radius:999px;padding:4px 8px;font:600 12.5px var(--body);line-height:1.2}
+.pill.np{background:var(--warn-soft);color:var(--warn)} .pill.ar{background:var(--ok-soft);color:var(--ok)}
+.legend .ok{color:var(--ok);font-weight:700} .legend .warn{color:var(--warn);font-weight:700} .legend .bad{color:var(--bad);font-weight:700}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;font-size:14.5px}
+.bar-row .bt{position:relative;height:26px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar-row .bt i{position:absolute;inset:0 auto 0 0;background:var(--muted)} .bar-row .bt i.req{background:var(--c-trv)} .bar-row .bt i.car{background:var(--accent)}
+.bar-row .bt em{position:relative;font-style:normal;font-weight:700;padding-left:8px;line-height:26px;color:var(--card)}
+.regs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.reg{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c-gen);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}
+.reg > b{font:800 18px var(--display)} .reg.r2{border-left-color:var(--c-auto)} .reg.r3{border-left-color:var(--c-com)} .reg.r4{border-left-color:var(--muted)}
 .diagram .ln{stroke:var(--muted);stroke-width:2;fill:none}
 .diagram .bld{fill:var(--accent-soft);stroke:var(--ink);stroke-width:2}
 .diagram .bld2{fill:var(--paper);stroke:var(--muted);stroke-width:2;stroke-dasharray:5 4}
@@ -486,7 +529,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
 
   <!-- MAP -->
   <section class="view" id="v-map" hidden>
-    <p>The whole exam on one screen. Each topic shows its share of the exam and the things you need to know inside it. Below are pictures of the home policy and the auto policy, so you can see which coverage pays for what.</p>
+    <p>The whole exam on one screen. Each topic shows its share of the exam and the things you need to know inside it. Below are pictures for each topic, so you can see which coverage pays for what.</p>
 
     <div class="maproot"><b>RIBO Level 1 exam</b><span>100 scored questions · 75% to pass</span></div>
     <div class="branches">
@@ -520,88 +563,30 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
       </div>
     </div>
 
-    <h2>The home policy: who pays for what</h2>
-    <div class="diagram">
-      <svg viewBox="0 0 660 330" role="img" aria-labelledby="houseT houseD" xmlns="http://www.w3.org/2000/svg">
-        <title id="houseT">Home insurance coverages A to H</title>
-        <desc id="houseD">A house is Coverage A, the detached garage and fence are Coverage B, belongings inside are Coverage C, a hotel stay after a fire is Coverage D, and an injured guest is Coverage E and F.</desc>
-        <line x1="10" y1="292" x2="650" y2="292" class="ln"/>
-        <!-- hotel (D) -->
-        <rect x="24" y="120" width="92" height="172" class="bld2"/>
-        <g class="win"><rect x="38" y="138" width="18" height="18"/><rect x="84" y="138" width="18" height="18"/><rect x="38" y="174" width="18" height="18"/><rect x="84" y="174" width="18" height="18"/><rect x="38" y="210" width="18" height="18"/><rect x="84" y="210" width="18" height="18"/></g>
-        <rect x="58" y="250" width="24" height="42" class="door"/>
-        <text x="70" y="112" class="lbl" text-anchor="middle">Hotel</text>
-        <!-- house (A) -->
-        <polygon points="160,170 280,88 400,170" class="roof"/>
-        <rect x="176" y="170" width="208" height="122" class="bld"/>
-        <rect x="266" y="226" width="30" height="66" class="door"/>
-        <rect x="194" y="192" width="44" height="34" class="win1"/>
-        <rect x="322" y="192" width="44" height="34" class="win1"/>
-        <!-- contents (C): sofa + tv seen in window -->
-        <rect x="198" y="250" width="50" height="20" rx="4" class="item"/><rect x="198" y="240" width="10" height="30" rx="3" class="item"/><rect x="238" y="240" width="10" height="30" rx="3" class="item"/>
-        <rect x="320" y="246" width="40" height="26" rx="2" class="item"/>
-        <!-- detached garage (B) + fence -->
-        <polygon points="430,214 485,176 540,214" class="roof"/>
-        <rect x="440" y="214" width="90" height="78" class="bld"/>
-        <rect x="455" y="236" width="60" height="56" class="door"/>
-        <g class="ln"><line x1="560" y1="250" x2="640" y2="250"/><line x1="560" y1="272" x2="640" y2="272"/><line x1="566" y1="242" x2="566" y2="292"/><line x1="590" y1="242" x2="590" y2="292"/><line x1="614" y1="242" x2="614" y2="292"/><line x1="638" y1="242" x2="638" y2="292"/></g>
-        <!-- guest slipping (E/F) -->
-        <g class="person"><circle cx="420" cy="262" r="6"/><line x1="420" y1="268" x2="412" y2="284"/><line x1="412" y1="284" x2="400" y2="290"/><line x1="412" y1="284" x2="424" y2="292"/><line x1="417" y1="274" x2="404" y2="270"/><line x1="417" y1="274" x2="430" y2="268"/></g>
-        <!-- badges -->
-        <g class="badge"><circle cx="280" cy="64" r="15"/><text x="280" y="69">A</text></g>
-        <text x="300" y="58" class="lbl">Dwelling</text><text x="300" y="74" class="sub">house + attached garage, deck</text>
-        <g class="badge"><circle cx="485" cy="150" r="15"/><text x="485" y="155">B</text></g>
-        <text x="505" y="146" class="lbl">Detached</text><text x="505" y="162" class="sub">garage, shed, fence</text>
-        <g class="badge"><circle cx="222" cy="312" r="13"/><text x="222" y="317">C</text></g>
-        <text x="240" y="317" class="sub">belongings inside (contents)</text>
-        <g class="badge"><circle cx="70" cy="82" r="15"/><text x="70" y="87">D</text></g>
-        <text x="20" y="54" class="sub">extra living cost</text><text x="20" y="40" class="lbl">If home unlivable</text>
-        <g class="badge"><circle cx="422" cy="236" r="13"/><text x="422" y="241">E</text></g>
-        <g class="badge"><circle cx="446" cy="312" r="13"/><text x="446" y="317">F</text></g>
-        <text x="464" y="317" class="sub">guest hurt: E if liable, F regardless</text>
-      </svg>
-    </div>
-    <div class="legend">
-      <div><span class="bdg">A</span>Dwelling: the house and anything attached to it.</div>
-      <div><span class="bdg">B</span>Detached private structures: detached garage, shed, fence.</div>
-      <div><span class="bdg">C</span>Personal property: your belongings, home or temporarily away.</div>
-      <div><span class="bdg">D</span>Additional living expense / fair rental value while the home can't be lived in.</div>
-      <div><span class="bdg">E</span>Legal liability: you're legally responsible for injury or damage to others.</div>
-      <div><span class="bdg">F</span>Voluntary medical payments to others, regardless of fault.</div>
-      <div><span class="bdg">G</span>Voluntary payment for damage to others' property.</div>
-      <div><span class="bdg">H</span>Voluntary compensation for residence employees (nanny, housekeeper).</div>
-    </div>
-    <p class="note"><b>Deductible:</b> applies to A to D (property), not E to H (liability). <b>Tenants</b> have no A. <b>Condo owners</b> insure upgrades (betterments) and loss assessment; the corporation insures the building.</p>
+    <h2 class="mh">Auto insurance</h2>
 
-    <h2>The auto policy: who pays for what</h2>
+    <h3>Which section pays for what</h3>
     <div class="diagram">
-      <svg viewBox="0 0 660 300" role="img" aria-labelledby="carT carD" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 400 230" role="img" aria-labelledby="carT carD" xmlns="http://www.w3.org/2000/svg">
         <title id="carT">Ontario Automobile Policy sections 3 to 7</title>
-        <desc id="carD">Your car with sections 4, 6 and 7, another driver and a pedestrian under section 3, and an uninsured or hit and run car under section 5.</desc>
-        <line x1="10" y1="236" x2="650" y2="236" class="ln"/>
-        <!-- your car -->
-        <path d="M60 210 L80 176 L180 168 L220 190 L250 192 L250 216 L60 216 Z" class="car1"/>
-        <circle cx="95" cy="218" r="16" class="wheel"/><circle cx="215" cy="218" r="16" class="wheel"/>
-        <g class="person"><circle cx="150" cy="182" r="6"/></g>
-        <text x="150" y="268" class="lbl" text-anchor="middle">Your car</text>
-        <!-- other car -->
-        <path d="M400 210 L420 176 L520 168 L560 190 L590 192 L590 216 L400 216 Z" class="car2"/>
-        <circle cx="435" cy="218" r="16" class="wheel"/><circle cx="555" cy="218" r="16" class="wheel"/>
-        <text x="495" y="268" class="lbl" text-anchor="middle">Someone else</text>
-        <!-- pedestrian -->
-        <g class="person"><circle cx="620" cy="160" r="7"/><line x1="620" y1="167" x2="620" y2="196"/><line x1="620" y1="196" x2="610" y2="220"/><line x1="620" y1="196" x2="630" y2="220"/><line x1="620" y1="176" x2="608" y2="188"/><line x1="620" y1="176" x2="632" y2="188"/></g>
-        <!-- ghost uninsured car -->
-        <path d="M290 120 L304 98 L372 92 L398 106 L418 108 L418 126 L290 126 Z" class="ghost"/>
-        <text x="354" y="146" class="sub" text-anchor="middle">uninsured or hit and run</text>
-        <!-- badges -->
-        <g class="badge"><circle cx="150" cy="150" r="15"/><text x="150" y="155">4</text></g>
-        <text x="150" y="124" class="sub" text-anchor="middle">4 = your injuries, no-fault</text>
-        <g class="badge"><circle cx="100" cy="150" r="15"/><text x="100" y="155">6</text></g>
-        <g class="badge"><circle cx="200" cy="150" r="15"/><text x="200" y="155">7</text></g>
-        <g class="badge"><circle cx="495" cy="150" r="15"/><text x="495" y="155">3</text></g>
-        <g class="badge"><circle cx="620" cy="130" r="15"/><text x="620" y="135">3</text></g>
-        <text x="440" y="110" class="sub">injury or damage you cause</text>
-        <g class="badge"><circle cx="354" cy="72" r="15"/><text x="354" y="77">5</text></g>
+        <desc id="carD">Your car has sections 4, 6 and 7. The other driver and a pedestrian are section 3. An uninsured or hit and run car is section 5.</desc>
+        <line x1="6" y1="186" x2="394" y2="186" class="ln"/>
+        <path d="M14 168 L30 140 L112 134 L144 152 L166 154 L166 174 L14 174 Z" class="car1"/>
+        <circle cx="42" cy="176" r="12" class="wheel"/><circle cx="136" cy="176" r="12" class="wheel"/>
+        <circle cx="90" cy="148" r="5" class="headc"/>
+        <text x="90" y="214" class="lbl" text-anchor="middle">You</text>
+        <path d="M210 168 L226 140 L308 134 L340 152 L362 154 L362 174 L210 174 Z" class="car2"/>
+        <circle cx="238" cy="176" r="12" class="wheel"/><circle cx="332" cy="176" r="12" class="wheel"/>
+        <text x="286" y="214" class="lbl" text-anchor="middle">Other driver</text>
+        <g class="person"><circle cx="382" cy="124" r="6"/><line x1="382" y1="130" x2="382" y2="156"/><line x1="382" y1="156" x2="374" y2="176"/><line x1="382" y1="156" x2="390" y2="176"/><line x1="382" y1="138" x2="372" y2="148"/><line x1="382" y1="138" x2="392" y2="148"/></g>
+        <path d="M130 76 L142 58 L198 54 L220 64 L236 66 L236 82 L130 82 Z" class="ghost"/>
+        <text x="244" y="74" class="sub">uninsured / hit-and-run</text>
+        <g class="badge"><circle cx="40" cy="112" r="15"/><text x="40" y="118">6</text></g>
+        <g class="badge"><circle cx="90" cy="112" r="15"/><text x="90" y="118">4</text></g>
+        <g class="badge"><circle cx="140" cy="112" r="15"/><text x="140" y="118">7</text></g>
+        <g class="badge"><circle cx="286" cy="112" r="15"/><text x="286" y="118">3</text></g>
+        <g class="badge"><circle cx="382" cy="96" r="15"/><text x="382" y="102">3</text></g>
+        <g class="badge"><circle cx="183" cy="30" r="15"/><text x="183" y="36">5</text></g>
       </svg>
     </div>
     <div class="legend">
@@ -609,15 +594,187 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
       <div><span class="bdg">4</span>Accident benefits: your own injuries, whoever caused the accident. Medical, rehab, attendant care are mandatory.</div>
       <div><span class="bdg">5</span>Uninsured automobile: injury from uninsured or hit-and-run drivers; car damage only if the driver is identified.</div>
       <div><span class="bdg">6</span>DCPD: your own insurer pays your car damage for the part you didn't cause (Ontario collisions with another insured car).</div>
-      <div><span class="bdg">7</span>Loss or damage to your car: collision, comprehensive, all perils or specified perils. Pays the at-fault part and non-collision losses.</div>
+      <div><span class="bdg">7</span>Loss or damage to your car: collision, comprehensive, all perils or specified perils.</div>
     </div>
 
-    <h2>Commercial liability (CGL) in four boxes</h2>
+    <h3>DCPD: who pays for your car</h3>
+    <p class="cap">Example: $8,000 of damage, you're 25% at fault.</p>
+    <div class="split" role="img" aria-label="75 percent, 6,000 dollars, paid by DCPD; 25 percent, 2,000 dollars, paid by collision coverage">
+      <span class="s-ok" style="flex:75">DCPD pays 75% · $6,000</span><span class="s-warn" style="flex:25">25% · $2,000</span>
+    </div>
+    <div class="splitkey"><span><i class="s-ok"></i>Part you didn't cause → <b>DCPD</b> (Section 6)</span><span><i class="s-warn"></i>Your at-fault part → <b>Collision or All Perils</b>, minus the deductible. No collision coverage = you pay it.</span></div>
+
+    <h3>Fault Determination Rules at a glance</h3>
+    <div class="faults">
+      <figure><svg viewBox="0 0 160 110" role="img" aria-label="Rear-end: the following car is 100 percent at fault" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="20" width="160" height="70" class="road"/><line x1="0" y1="55" x2="160" y2="55" class="lane"/>
+        <rect x="92" y="62" width="40" height="20" rx="4" class="carB"/><rect x="38" y="62" width="40" height="20" rx="4" class="carA"/>
+        <path d="M14 72 L32 72" class="arr"/><text x="58" y="77" class="ctxt" text-anchor="middle">A</text><text x="112" y="77" class="ctxt" text-anchor="middle">B</text></svg>
+        <figcaption><b>Rear-end</b> A hits B from behind, same lane: <b>A 100%</b>.</figcaption></figure>
+      <figure><svg viewBox="0 0 160 110" role="img" aria-label="Lane change: the car changing lanes is 100 percent at fault" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="20" width="160" height="70" class="road"/><line x1="0" y1="55" x2="160" y2="55" class="lane"/>
+        <rect x="96" y="62" width="40" height="20" rx="4" class="carB"/><rect x="50" y="34" width="40" height="20" rx="4" class="carA" transform="rotate(14 70 44)"/>
+        <path d="M70 50 Q92 60 100 64" class="arr"/><text x="66" y="49" class="ctxt" text-anchor="middle">A</text><text x="116" y="77" class="ctxt" text-anchor="middle">B</text></svg>
+        <figcaption><b>Lane change</b> A moves into B's lane: <b>A 100%</b>.</figcaption></figure>
+      <figure><svg viewBox="0 0 160 110" role="img" aria-label="Left turn: the car turning left across oncoming traffic is 100 percent at fault" xmlns="http://www.w3.org/2000/svg">
+        <rect x="58" y="0" width="44" height="110" class="road"/><rect x="0" y="34" width="160" height="42" class="road"/>
+        <rect x="62" y="74" width="16" height="28" rx="3" class="carA"/><path d="M70 72 Q70 52 50 50" class="arr"/>
+        <rect x="82" y="10" width="16" height="28" rx="3" class="carB"/><path d="M90 40 L90 60" class="arr"/>
+        <text x="70" y="93" class="ctxt" text-anchor="middle">A</text><text x="90" y="28" class="ctxt" text-anchor="middle">B</text></svg>
+        <figcaption><b>Left turn</b> A turns left across oncoming B: <b>A 100%</b>.</figcaption></figure>
+      <figure><svg viewBox="0 0 160 110" role="img" aria-label="Parked car hit: the parked car is 0 percent at fault" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="20" width="160" height="70" class="road"/><rect x="0" y="82" width="160" height="10" class="curb"/>
+        <rect x="92" y="60" width="40" height="20" rx="4" class="carB"/><rect x="34" y="40" width="40" height="20" rx="4" class="carA"/>
+        <path d="M76 52 L92 62" class="arr"/><text x="54" y="55" class="ctxt" text-anchor="middle">A</text><text x="112" y="75" class="ctxt" text-anchor="middle">P</text></svg>
+        <figcaption><b>Parked car</b> A hits legally parked P: <b>P 0%</b>, A 100%.</figcaption></figure>
+    </div>
+
+    <h2 class="mh">Home insurance</h2>
+
+    <h3>Coverages A to H: who pays for what</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 400 250" role="img" aria-labelledby="houseT houseD" xmlns="http://www.w3.org/2000/svg">
+        <title id="houseT">Home insurance coverages A to H</title>
+        <desc id="houseD">The house is Coverage A, the detached garage and fence are B, belongings inside are C, a hotel stay after a fire is D, and an injured guest is E and F.</desc>
+        <line x1="4" y1="226" x2="396" y2="226" class="ln"/>
+        <rect x="8" y="96" width="62" height="130" class="bld2"/>
+        <g class="win"><rect x="18" y="108" width="14" height="14"/><rect x="46" y="108" width="14" height="14"/><rect x="18" y="134" width="14" height="14"/><rect x="46" y="134" width="14" height="14"/><rect x="18" y="160" width="14" height="14"/><rect x="46" y="160" width="14" height="14"/></g>
+        <rect x="30" y="196" width="18" height="30" class="door"/>
+        <text x="39" y="244" class="sub" text-anchor="middle">Hotel</text>
+        <polygon points="92,128 180,66 268,128" class="roof"/>
+        <rect x="104" y="128" width="152" height="98" class="bld"/>
+        <rect x="170" y="172" width="24" height="54" class="door"/>
+        <rect x="118" y="144" width="36" height="26" class="win1"/><rect x="210" y="144" width="36" height="26" class="win1"/>
+        <rect x="116" y="200" width="40" height="16" rx="3" class="item"/><rect x="116" y="192" width="8" height="24" rx="3" class="item"/><rect x="148" y="192" width="8" height="24" rx="3" class="item"/>
+        <rect x="208" y="196" width="34" height="22" rx="2" class="item"/>
+        <polygon points="288,160 326,134 364,160" class="roof"/>
+        <rect x="294" y="160" width="64" height="66" class="bld"/>
+        <rect x="304" y="178" width="44" height="48" class="door"/>
+        <g class="ln"><line x1="364" y1="196" x2="396" y2="196"/><line x1="364" y1="212" x2="396" y2="212"/><line x1="370" y1="188" x2="370" y2="226"/><line x1="384" y1="188" x2="384" y2="226"/></g>
+        <g class="person"><circle cx="276" cy="200" r="5"/><line x1="276" y1="205" x2="270" y2="217"/><line x1="270" y1="217" x2="262" y2="224"/><line x1="270" y1="217" x2="280" y2="224"/><line x1="273" y1="210" x2="263" y2="207"/><line x1="273" y1="210" x2="284" y2="205"/></g>
+        <g class="badge"><circle cx="180" cy="40" r="16"/><text x="180" y="46">A</text></g>
+        <g class="badge"><circle cx="326" cy="110" r="16"/><text x="326" y="116">B</text></g>
+        <g class="badge"><circle cx="136" cy="182" r="13"/><text x="136" y="187">C</text></g>
+        <g class="badge"><circle cx="39" cy="74" r="16"/><text x="39" y="80">D</text></g>
+        <g class="badge"><circle cx="266" cy="176" r="13"/><text x="266" y="181">E</text></g>
+        <g class="badge"><circle cx="292" cy="176" r="13"/><text x="292" y="181">F</text></g>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><span class="bdg">A</span>Dwelling: the house and anything attached to it.</div>
+      <div><span class="bdg">B</span>Detached private structures: detached garage, shed, fence.</div>
+      <div><span class="bdg">C</span>Personal property: your belongings, at home or temporarily away.</div>
+      <div><span class="bdg">D</span>Additional living expense / fair rental value while the home can't be lived in (hotel).</div>
+      <div><span class="bdg">E</span>Legal liability: you're legally responsible for injury or damage to others.</div>
+      <div><span class="bdg">F</span>Voluntary medical payments to others, regardless of fault.</div>
+      <div><span class="bdg">G</span>Voluntary payment for damage to others' property.</div>
+      <div><span class="bdg">H</span>Voluntary compensation for residence employees (nanny, housekeeper).</div>
+    </div>
+    <p class="note"><b>Deductible:</b> applies to A to D (property), not E to H (liability). <b>Tenants</b> have no A. <b>Condo owners</b> insure upgrades (betterments) and loss assessment; the corporation insures the building.</p>
+
+    <h3>Policy forms: how wide is the coverage?</h3>
+    <div class="forms">
+      <div class="fh"></div><div class="fh">Basic</div><div class="fh">Broad</div><div class="fh">Compre&shy;hensive</div>
+      <div class="fr">Building</div><div><span class="pill np">Named perils</span></div><div><span class="pill ar">All risks</span></div><div><span class="pill ar">All risks</span></div>
+      <div class="fr">Contents</div><div><span class="pill np">Named perils</span></div><div><span class="pill np">Named perils</span></div><div><span class="pill ar">All risks</span></div>
+    </div>
+    <p class="cap"><b>Named perils</b> = only the causes listed (fire, wind, theft…). <b>All risks</b> = everything except what's excluded. A spilled-paint accident on a rug is only covered under all risks contents.</p>
+
+    <h3>Water damage: covered or not?</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 400 230" role="img" aria-labelledby="waterT" xmlns="http://www.w3.org/2000/svg">
+        <title id="waterT">Four kinds of water damage to a house</title>
+        <rect x="0" y="150" width="400" height="80" class="soil"/>
+        <rect x="70" y="60" width="200" height="90" class="bld"/><polygon points="58,60 170,14 282,60" class="roof"/>
+        <rect x="70" y="150" width="200" height="56" class="bsmt"/>
+        <line x1="70" y1="150" x2="270" y2="150" class="ln"/>
+        <path d="M110 70 L110 110 L150 110" class="pipe"/><path d="M150 110 q6 -10 12 0 q6 10 12 0" class="spray"/>
+        <path d="M180 226 L180 200" class="pipe"/><path d="M180 200 q-8 -8 0 -16 q8 -8 0 -16" class="spray"/>
+        <path d="M296 146 q18 -6 36 0 q18 6 36 0 L396 146 L396 150 L292 150 Z" class="flood"/><path d="M300 140 L276 140" class="arr2"/>
+        <path d="M30 196 q10 -6 20 0 q10 6 20 0" class="spray"/><path d="M58 186 L72 182" class="arr2"/>
+        <g class="badge"><circle cx="134" cy="88" r="13"/><text x="134" y="93">1</text></g>
+        <g class="badge"><circle cx="206" cy="182" r="13"/><text x="206" y="187">2</text></g>
+        <g class="badge"><circle cx="330" cy="118" r="13"/><text x="330" y="123">3</text></g>
+        <g class="badge"><circle cx="34" cy="172" r="13"/><text x="34" y="177">4</text></g>
+        <text x="350" y="140" class="sub" text-anchor="middle">river</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><span class="bdg">1</span><span><b>Burst pipe</b> (sudden escape of water) — <span class="ok">usually covered</span>.</span></div>
+      <div><span class="bdg">2</span><span><b>Sewer backup</b> up the floor drain or sump — <span class="warn">needs an endorsement</span>.</span></div>
+      <div><span class="bdg">3</span><span><b>Overland water</b> from a river, lake or heavy rain — <span class="warn">needs an endorsement</span>.</span></div>
+      <div><span class="bdg">4</span><span><b>Ground water</b> seeping through the foundation — <span class="warn">needs an endorsement</span>.</span></div>
+      <div><span class="bdg">✕</span><span><b>Slow leak over months</b> (rot, mould) — <span class="bad">never covered</span>.</span></div>
+    </div>
+    <p class="cap">Sell 2, 3 and 4 together: one storm often causes several at once (<b>concurrent causation</b>).</p>
+
+    <h3>Co-insurance: the penalty for insuring too low</h3>
+    <p class="cap">Home worth $400,000 · 80% clause · insured for $240,000 · $100,000 loss</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">Value</span><span class="bt"><i style="width:100%"></i><em>$400,000</em></span></div>
+      <div class="bar-row"><span class="bl">Required (80%)</span><span class="bt"><i class="req" style="width:80%"></i><em>$320,000</em></span></div>
+      <div class="bar-row"><span class="bl">Carried</span><span class="bt"><i class="car" style="width:60%"></i><em>$240,000</em></span></div>
+    </div>
+    <div class="formula">Paid = carried ÷ required × loss = 240 ÷ 320 × $100,000 = <b>$75,000</b></div>
+    <div class="split" role="img" aria-label="Of the 100,000 dollar loss, the insurer pays 75,000 and the owner pays 25,000">
+      <span class="s-ok" style="flex:75">Insurer $75,000</span><span class="s-bad" style="flex:25">You $25,000</span>
+    </div>
+
+    <h2 class="mh">Commercial insurance</h2>
+
+    <h3>Commercial liability (CGL) in four boxes</h3>
     <div class="cgl">
       <div><b>A</b><span>Bodily injury &amp; property damage to others</span><small>customer slips; contractor damages a car</small></div>
       <div><b>B</b><span>Personal &amp; advertising injury</span><small>false arrest, libel, slander, ad copying</small></div>
       <div><b>C</b><span>Medical payments</span><small>small bills, regardless of fault</small></div>
       <div><b>D</b><span>Tenants' legal liability</span><small>tenant damages the rented premises</small></div>
+    </div>
+
+    <h3>Occurrence vs claims-made</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 400 220" role="img" aria-labelledby="ocT ocD" xmlns="http://www.w3.org/2000/svg">
+        <title id="ocT">Occurrence versus claims-made</title>
+        <desc id="ocD">Occurrence covers injury that happens during the policy, even if the claim comes later. Claims-made covers claims made during the policy, for work after the retroactive date.</desc>
+        <text x="8" y="22" class="lbl">Occurrence</text>
+        <line x1="8" y1="62" x2="392" y2="62" class="ln"/>
+        <rect x="70" y="52" width="150" height="20" rx="6" class="period"/><text x="145" y="44" class="ptxt" text-anchor="middle">policy year</text>
+        <g class="evt"><circle cx="120" cy="62" r="7"/></g><text x="120" y="100" class="sub" text-anchor="middle">injury</text>
+        <g class="evt2"><circle cx="330" cy="62" r="7"/></g><text x="330" y="100" class="sub" text-anchor="middle">claim (years later)</text>
+        <text x="392" y="22" class="okt" text-anchor="end">✓ covered</text>
+        <text x="8" y="134" class="lbl">Claims-made</text>
+        <line x1="8" y1="174" x2="392" y2="174" class="ln"/>
+        <line x1="40" y1="148" x2="40" y2="200" class="retro"/><text x="40" y="216" class="sub" text-anchor="middle">retro date</text>
+        <rect x="230" y="164" width="150" height="20" rx="6" class="period"/><text x="305" y="156" class="ptxt" text-anchor="middle">policy year</text>
+        <g class="evt"><circle cx="110" cy="174" r="7"/></g><text x="110" y="212" class="sub" text-anchor="middle">work done</text>
+        <g class="evt2"><circle cx="280" cy="174" r="7"/></g>
+        <text x="392" y="134" class="okt" text-anchor="end">✓ if claim in policy year</text>
+      </svg>
+    </div>
+    <p class="cap">Retiring on a claims-made policy? Buy an <b>extended reporting period</b> ("tail"). Work before the retro date isn't covered.</p>
+
+    <h3>Surety bond: three parties</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 400 210" role="img" aria-labelledby="bondT" xmlns="http://www.w3.org/2000/svg">
+        <title id="bondT">Surety bond: principal, obligee and surety</title>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" class="ahd"/></marker></defs>
+        <rect x="8" y="140" width="128" height="52" rx="10" class="node"/><text x="72" y="163" class="lbl" text-anchor="middle">Principal</text><text x="72" y="181" class="sub" text-anchor="middle">contractor</text>
+        <rect x="264" y="140" width="128" height="52" rx="10" class="node"/><text x="328" y="163" class="lbl" text-anchor="middle">Obligee</text><text x="328" y="181" class="sub" text-anchor="middle">city / owner</text>
+        <rect x="136" y="10" width="128" height="52" rx="10" class="node2"/><text x="200" y="33" class="lbl" text-anchor="middle">Surety</text><text x="200" y="51" class="sub" text-anchor="middle">bond company</text>
+        <line x1="138" y1="166" x2="260" y2="166" class="arrl" marker-end="url(#ah)"/><text x="200" y="158" class="sub" text-anchor="middle">promises the work</text>
+        <line x1="236" y1="64" x2="300" y2="136" class="arrl" marker-end="url(#ah)"/><text x="300" y="100" class="sub">guarantees</text>
+        <line x1="100" y1="136" x2="164" y2="64" class="arrl" marker-end="url(#ah)"/><text x="12" y="100" class="sub">repays if surety pays</text>
+      </svg>
+    </div>
+    <p class="cap">Bid bond: will sign the contract. Performance bond: will finish the work. Payment bond: subcontractors and suppliers get paid.</p>
+
+    <h2 class="mh">Who regulates what</h2>
+    <div class="regs">
+      <div class="reg r1"><b>RIBO</b><span>Licenses and disciplines <b>brokers</b> (you). Complaints about brokers.</span></div>
+      <div class="reg r2"><b>FSRA</b><span>Regulates <b>insurers and agents</b>. Approves auto rates and the OAP 1.</span></div>
+      <div class="reg r3"><b>CCIR</b><span>National council of regulators. <b>Fair Treatment of Customers</b>.</span></div>
+      <div class="reg r3"><b>CISRO</b><span>National agent and broker regulators. <b>Intermediary code of conduct</b>.</span></div>
+      <div class="reg r4"><b>IBAO</b><span>Brokers' <b>trade association</b> (courses, exams). Not a regulator.</span></div>
+      <div class="reg r4"><b>GIO</b><span>General Insurance OmbudService: disputes with an <b>insurer</b> after its own complaint process.</span></div>
     </div>
   </section>
 
