@@ -914,8 +914,21 @@ function renderTracks(){const box=$("#tracks");box.innerHTML="";
     const done=st.d?" · done":st.p?` · ${fmtMin(st.p)} played`:"";
     b.innerHTML=`<span class="t"></span><small>${fmtMin(t.s)}${done}</small><span class="pbar"><i style="width:${st.d?100:Math.min(100,(st.p||0)/t.s*100)}%"></i></span>`;
     b.querySelector(".t").textContent=t.n;b.onclick=()=>play(k);box.appendChild(b)});}
+/* Locked-screen auto-next: phones pause a page that stops playing audio, so the next track is
+   downloaded into memory about 90 s before the current one ends and starts instantly on "ended". */
+let nextBuf={k:null,url:null,loading:false},curBlobUrl=null;
+function autoNextOn(){return $("#autonext").getAttribute("aria-pressed")==="true"}
+function preloadNext(){const k=curTrack+1;if(!autoNextOn()||k>=TRACKS.length||nextBuf.k===k||nextBuf.loading)return;
+  nextBuf.loading=true;
+  fetch("audio/"+TRACKS[k].f).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob()})
+    .then(b=>{if(nextBuf.url)URL.revokeObjectURL(nextBuf.url);nextBuf={k,url:URL.createObjectURL(b),loading:false}})
+    .catch(()=>{nextBuf.loading=false})}
 function play(k){const t=TRACKS[k];curTrack=k;$("#player").hidden=false;$("#nowTitle").textContent=t.n;
-  audio.src="audio/"+t.f;audio.playbackRate=+$("#speed").value;
+  const old=curBlobUrl;curBlobUrl=null;
+  if(nextBuf.k===k&&nextBuf.url){curBlobUrl=nextBuf.url;nextBuf={k:null,url:null,loading:false};audio.src=curBlobUrl}
+  else audio.src="audio/"+t.f;
+  if(old)setTimeout(()=>URL.revokeObjectURL(old),5000);
+  audio.playbackRate=+$("#speed").value;
   const st=listen[t.f];audio.onloadedmetadata=()=>{if(st&&st.p&&!st.d&&st.p<t.s-5)audio.currentTime=st.p;audio.playbackRate=+$("#speed").value};
   audio.play().catch(()=>{});
   if("mediaSession" in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:t.n,artist:"RIBO Level 1 audio course",album:"RIBO Prep",artwork:[{src:"icons/icon-512.png",sizes:"512x512",type:"image/png"}]});
@@ -923,14 +936,19 @@ function play(k){const t=TRACKS[k];curTrack=k;$("#player").hidden=false;$("#nowT
     navigator.mediaSession.setActionHandler("nexttrack",()=>{if(k+1<TRACKS.length)play(k+1)});navigator.mediaSession.setActionHandler("previoustrack",()=>{if(k>0)play(k-1)})}
   renderTracks()}
 audio.ontimeupdate=()=>{if(curTrack===null)return;const t=TRACKS[curTrack];const now=Date.now();
+  if(audio.duration&&audio.duration-audio.currentTime<90)preloadNext();
   if(now-lastTick>=5000){if(lastTick&&!audio.paused){dayEntry().m+=Math.min(10,(now-lastTick)/1000);store.set("ribo-log",log)}
     lastTick=now;listen[t.f]={p:Math.floor(audio.currentTime),d:(listen[t.f]||{}).d||false};store.set("ribo-listen",listen)}};
 audio.onpause=()=>{lastTick=0};
-audio.onended=()=>{const t=TRACKS[curTrack];listen[t.f]={p:0,d:true};store.set("ribo-listen",listen);renderTracks();
-  if($("#autonext").getAttribute("aria-pressed")==="true"&&curTrack+1<TRACKS.length)play(curTrack+1)};
+audio.onended=()=>{const t=TRACKS[curTrack];listen[t.f]={p:0,d:true};store.set("ribo-listen",listen);
+  if(autoNextOn()&&curTrack+1<TRACKS.length)play(curTrack+1);   // start the next track first, before any other work
+  else renderTracks()};
+audio.onplay=()=>{if("mediaSession" in navigator)navigator.mediaSession.playbackState="playing"};
+audio.addEventListener("pause",()=>{if("mediaSession" in navigator)navigator.mediaSession.playbackState="paused"});
 $("#speed").value=String(store.get("ribo-speed","1"));
 $("#speed").onchange=()=>{audio.playbackRate=+$("#speed").value;store.set("ribo-speed",$("#speed").value)};
-$("#autonext").onclick=()=>{const on=$("#autonext").getAttribute("aria-pressed")!=="true";$("#autonext").setAttribute("aria-pressed",on)};
+$("#autonext").setAttribute("aria-pressed",store.get("ribo-autonext",true));
+$("#autonext").onclick=()=>{const on=$("#autonext").getAttribute("aria-pressed")!=="true";$("#autonext").setAttribute("aria-pressed",on);store.set("ribo-autonext",on)};
 $("#back15").onclick=()=>{audio.currentTime=Math.max(0,audio.currentTime-15)};
 $("#fwd30").onclick=()=>{audio.currentTime+=30};
 
