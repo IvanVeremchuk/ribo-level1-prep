@@ -152,6 +152,7 @@ select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--lin
 .nums b{font:800 19px var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
 table.mini{font-size:13.5px;table-layout:fixed} table.mini th{font-size:11px;letter-spacing:0;text-transform:none} table.mini th,table.mini td{padding:6px 4px;text-align:center}
 table.mini td:first-child,table.mini th:first-child{text-align:left;width:26%;white-space:normal;font-family:var(--body);font-size:13.5px}
+table.mocktbl td:first-child{width:18%;white-space:nowrap} table.mocktbl th,table.mocktbl td{font-size:12.5px;padding:6px 2px}
 table.mini .y{color:var(--ok);font-weight:700} table.mini .n{color:var(--bad);font-weight:700} table.mini .p{color:var(--warn);font-size:12px}
 .pkg{border:2px solid var(--c-com);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:10px}
 .pkgin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -165,6 +166,22 @@ table.mini .y{color:var(--ok);font-weight:700} table.mini .n{color:var(--bad);fo
 .vtime li b{display:block;font:700 15px var(--display)}
 .pace{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .pace span{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:8px 4px;text-align:center;font:700 13px var(--body)}
+
+/* flashcards */
+.cardbox{display:flex;flex-direction:column;gap:12px}
+.fcard{min-height:230px;width:100%;background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;font:inherit;color:var(--ink);cursor:pointer}
+.fcard .fside{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.fcard .ffront{font:800 clamp(24px,7vw,34px)/1.15 var(--display);overflow-wrap:anywhere}
+.fcard .fback{font-size:17px;line-height:1.45;max-width:36ch}
+.fcard .fhint{font-size:13px;color:var(--muted)}
+.fcard.flipped{border-top-color:var(--ok)}
+.fbtns .btn{flex:1}
+.btn:disabled{opacity:.4;cursor:default}
+.fstat{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.figlink{display:inline-block;margin-top:8px;font-weight:700;color:var(--accent);background:none;border:0;padding:0;font:inherit;font-weight:700;cursor:pointer;text-decoration:underline}
+#pChart svg{width:100%;height:auto;display:block}
+#pChart .gl{stroke:var(--line)} #pChart .pass{stroke:var(--ok);stroke-dasharray:5 4} #pChart .ln{stroke:var(--accent);stroke-width:2.5;fill:none}
+#pChart .dot{fill:var(--accent)} #pChart text{fill:var(--muted);font:600 11px var(--body)} #pChart .pl{fill:var(--ok)}
 /* study plan */
 .wbar5{display:flex;height:34px;border-radius:8px;overflow:hidden;font:700 12.5px var(--body)}
 .wbar5 span{display:flex;align-items:center;justify-content:center;color:var(--card);min-width:0;overflow:hidden;white-space:nowrap}
@@ -295,6 +312,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     <a href="#plan">Study plan</a>
     <a href="#course">Course</a>
     <a href="#map">Map</a>
+    <a href="#cards">Cards</a>
     <a href="#practice">Practice</a>
     <a href="#listen">Listen</a>
     <a href="#progress">My progress</a>
@@ -986,7 +1004,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
 
     <h2 class="mh">Auto insurance</h2>
 
-    <h3>Which section pays for what</h3>
+    <h3 id="fig-car">Which section pays for what</h3>
     <div class="diagram">
       <svg viewBox="0 0 400 230" role="img" aria-labelledby="carT carD" xmlns="http://www.w3.org/2000/svg">
         <title id="carT">Ontario Automobile Policy sections 3 to 7</title>
@@ -1018,14 +1036,14 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
       <div><span class="bdg">7</span>Loss or damage to your car: collision, comprehensive, all perils or specified perils.</div>
     </div>
 
-    <h3>DCPD: who pays for your car</h3>
+    <h3 id="fig-dcpd">DCPD: who pays for your car</h3>
     <p class="cap">Example: $8,000 of damage, you're 25% at fault.</p>
     <div class="split" role="img" aria-label="75 percent, 6,000 dollars, paid by DCPD; 25 percent, 2,000 dollars, paid by collision coverage">
       <span class="s-ok" style="flex:75">DCPD pays 75% · $6,000</span><span class="s-warn" style="flex:25">25% · $2,000</span>
     </div>
     <div class="splitkey"><span><i class="s-ok"></i>Part you didn't cause → <b>DCPD</b> (Section 6)</span><span><i class="s-warn"></i>Your at-fault part → <b>Collision or All Perils</b>, minus the deductible. No collision coverage = you pay it.</span></div>
 
-    <h3>Fault Determination Rules at a glance</h3>
+    <h3 id="fig-fault">Fault Determination Rules at a glance</h3>
     <div class="faults">
       <figure><svg viewBox="0 0 160 110" role="img" aria-label="Rear-end: the following car is 100 percent at fault" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="20" width="160" height="70" class="road"/><line x1="0" y1="55" x2="160" y2="55" class="lane"/>
@@ -1052,7 +1070,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
 
     <h2 class="mh">Home insurance</h2>
 
-    <h3>Coverages A to H: who pays for what</h3>
+    <h3 id="fig-house">Coverages A to H: who pays for what</h3>
     <div class="diagram">
       <svg viewBox="0 0 400 250" role="img" aria-labelledby="houseT houseD" xmlns="http://www.w3.org/2000/svg">
         <title id="houseT">Home insurance coverages A to H</title>
@@ -1093,7 +1111,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     </div>
     <p class="note"><b>Deductible:</b> applies to A to D (property), not E to H (liability). <b>Tenants</b> have no A. <b>Condo owners</b> insure upgrades (betterments) and loss assessment; the corporation insures the building.</p>
 
-    <h3>Policy forms: how wide is the coverage?</h3>
+    <h3 id="fig-forms">Policy forms: how wide is the coverage?</h3>
     <div class="forms">
       <div class="fh"></div><div class="fh">Basic</div><div class="fh">Broad</div><div class="fh">Compre&shy;hensive</div>
       <div class="fr">Building</div><div><span class="pill np">Named perils</span></div><div><span class="pill ar">All risks</span></div><div><span class="pill ar">All risks</span></div>
@@ -1101,7 +1119,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     </div>
     <p class="cap"><b>Named perils</b> = only the causes listed (fire, wind, theft…). <b>All risks</b> = everything except what's excluded. A spilled-paint accident on a rug is only covered under all risks contents.</p>
 
-    <h3>Water damage: covered or not?</h3>
+    <h3 id="fig-water">Water damage: covered or not?</h3>
     <div class="diagram">
       <svg viewBox="0 0 400 230" role="img" aria-labelledby="waterT" xmlns="http://www.w3.org/2000/svg">
         <title id="waterT">Four kinds of water damage to a house</title>
@@ -1129,7 +1147,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     </div>
     <p class="cap">Sell 2, 3 and 4 together: one storm often causes several at once (<b>concurrent causation</b>).</p>
 
-    <h3>Co-insurance: the penalty for insuring too low</h3>
+    <h3 id="fig-coins">Co-insurance: the penalty for insuring too low</h3>
     <p class="cap">Home worth $400,000 · 80% clause · insured for $240,000 · $100,000 loss</p>
     <div class="bars">
       <div class="bar-row"><span class="bl">Value</span><span class="bt"><i style="width:100%"></i><em>$400,000</em></span></div>
@@ -1143,7 +1161,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
 
     <h2 class="mh">Commercial insurance</h2>
 
-    <h3>Commercial liability (CGL) in four boxes</h3>
+    <h3 id="fig-cgl">Commercial liability (CGL) in four boxes</h3>
     <div class="cgl">
       <div><b>A</b><span>Bodily injury &amp; property damage to others</span><small>customer slips; contractor damages a car</small></div>
       <div><b>B</b><span>Personal &amp; advertising injury</span><small>false arrest, libel, slander, ad copying</small></div>
@@ -1151,7 +1169,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
       <div><b>D</b><span>Tenants' legal liability</span><small>tenant damages the rented premises</small></div>
     </div>
 
-    <h3>Occurrence vs claims-made</h3>
+    <h3 id="fig-claims">Occurrence vs claims-made</h3>
     <div class="diagram">
       <svg viewBox="0 0 400 220" role="img" aria-labelledby="ocT ocD" xmlns="http://www.w3.org/2000/svg">
         <title id="ocT">Occurrence versus claims-made</title>
@@ -1173,7 +1191,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     </div>
     <p class="cap">Retiring on a claims-made policy? Buy an <b>extended reporting period</b> ("tail"). Work before the retro date isn't covered.</p>
 
-    <h3>Surety bond: three parties</h3>
+    <h3 id="fig-bond">Surety bond: three parties</h3>
     <div class="diagram">
       <svg viewBox="0 0 400 210" role="img" aria-labelledby="bondT" xmlns="http://www.w3.org/2000/svg">
         <title id="bondT">Surety bond: principal, obligee and surety</title>
@@ -1188,7 +1206,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     </div>
     <p class="cap">Bid bond: will sign the contract. Performance bond: will finish the work. Payment bond: subcontractors and suppliers get paid.</p>
 
-    <h2 class="mh">Who regulates what</h2>
+    <h2 class="mh" id="fig-regs">Who regulates what</h2>
     <div class="regs">
       <div class="reg r1"><b>RIBO</b><span>Licenses and disciplines <b>brokers</b> (you). Complaints about brokers.</span></div>
       <div class="reg r2"><b>FSRA</b><span>Regulates <b>insurers and agents</b>. Approves auto rates and the OAP 1.</span></div>
@@ -1196,6 +1214,26 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
       <div class="reg r3"><b>CISRO</b><span>National agent and broker regulators. <b>Intermediary code of conduct</b>.</span></div>
       <div class="reg r4"><b>IBAO</b><span>Brokers' <b>trade association</b> (courses, exams). Not a regulator.</span></div>
       <div class="reg r4"><b>GIO</b><span>General Insurance OmbudService: disputes with an <b>insurer</b> after its own complaint process.</span></div>
+    </div>
+  </section>
+
+  <!-- CARDS -->
+  <section class="view" id="v-cards" hidden>
+    <p>Flashcards for the things you must know by heart. Read the front, say the answer, then tap the card. Cards you get right move to the back; cards you miss come back sooner. Progress stays on this device.</p>
+    <div class="controls" id="deckChips" role="group" aria-label="Deck"></div>
+    <div class="cardbox">
+      <button type="button" class="fcard" id="fcard" aria-live="polite">
+        <span class="fside" id="fdeck"></span>
+        <span class="ffront" id="ffront"></span>
+        <span class="fback" id="fback" hidden></span>
+        <span class="fhint" id="fhint">Tap to show the answer</span>
+      </button>
+      <div class="rowbtns fbtns">
+        <button class="btn ghost" type="button" id="fAgain" disabled>Again</button>
+        <button class="btn" type="button" id="fGot" disabled>Got it</button>
+      </div>
+      <div class="fstat"><span id="fcount"></span><button class="btn ghost" type="button" id="fReset">Reset this deck</button></div>
+      <div class="bar" aria-hidden="true"><i id="fbar"></i></div>
     </div>
   </section>
 
@@ -1223,7 +1261,8 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
     <h3>Accuracy by topic</h3>
     <div id="pDomains" style="display:flex;flex-direction:column;gap:10px"></div>
     <h3>Mock exam history</h3>
-    <div class="tbl"><table><thead><tr><th>Date</th><th>Score</th><th>Gen</th><th>Auto</th><th>Hab</th><th>Com</th><th>Trv</th><th>Time</th></tr></thead><tbody id="pMocks"></tbody></table></div>
+    <div id="pChart"></div>
+    <div class="tbl"><table class="mini mocktbl"><thead><tr><th>Date</th><th>Score</th><th>Gen</th><th>Auto</th><th>Hab</th><th>Com</th><th>Trv</th></tr></thead><tbody id="pMocks"></tbody></table></div>
     <h3>Study log</h3>
     <div class="tbl"><table><thead><tr><th>Day</th><th>Questions</th><th>Correct</th><th>Listened</th></tr></thead><tbody id="pLog"></tbody></table></div>
     <h3>Backup and reset</h3>
@@ -1293,7 +1332,7 @@ const needsReview=q=>{const s=stats[q.id];return s&&s.w>0&&s.k<2};
 const unseen=q=>!stats[q.id];
 
 /* tabs */
-const views=["plan","course","map","practice","listen","progress","sources"];
+const views=["plan","course","map","cards","practice","listen","progress","sources"];
 function route(){const h=location.hash.replace("#","");const v=views.includes(h)?h:"plan";
   views.forEach(n=>{$("#v-"+n).hidden=n!==v});
   document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
@@ -1352,6 +1391,7 @@ function showAnswer(q,opts,btn,ok){
   fb.innerHTML=`<div class="explain"><b class="${btn&&!ok?"no":"ok"}"></b> <span></span></div><div style="margin-top:12px"><button class="btn" type="button" id="next">${i+1<deck.length?"Next question":(reveal?"Finish":"See score")}</button></div>`;
   fb.querySelector(".explain b").textContent=label;
   fb.querySelector(".explain span").textContent=q.e;
+  addFigLink(fb.querySelector(".explain"),q);
   $("#next").onclick=()=>{i++;render()};
 }
 let reveal=!!store.get("ribo-reveal",false);
@@ -1445,7 +1485,7 @@ function mockFinish(){
     el.querySelector(".mq").textContent=q.q;
     el.querySelector(".yours").textContent="Your answer: "+(a===null?"(no answer)":q.o[a]);
     el.querySelector(".corr").textContent="Correct: "+q.o[q.a];
-    el.querySelector(".ex").textContent=q.e;mm.appendChild(el)});
+    el.querySelector(".ex").textContent=q.e;addFigLink(el,q);mm.appendChild(el)});
   $("#mAgain").onclick=mockStart;drawScores();
 }
 
@@ -1464,8 +1504,9 @@ function renderProgress(){
     const p=a?Math.round(c/a*100):0;const el=document.createElement("div");el.className="dombar";
     el.innerHTML=`<span>${name}</span><span class="track" title="${sn} of ${all.length} seen"><i class="${a&&p<75?"low":""}" style="width:${p}%"></i></span><span class="num">${a?p+"%":"—"} <small>${sn}/${all.length}</small></span>`;dom.appendChild(el)});
   const ab={gen:"gen",auto:"auto",hab:"hab",com:"com",trv:"trv"};
-  $("#pMocks").innerHTML=log.mocks.length?log.mocks.slice().reverse().map(m=>`<tr><td>${new Date(m.t).toLocaleDateString()}</td><td class="${m.pct>=75?"pass":"fail"}">${m.pct}%</td>${Object.keys(ab).map(d=>`<td>${m.by[d]?pctTxt(m.by[d][0],m.by[d][1]):"—"}</td>`).join("")}<td>${fmt(m.used)}</td></tr>`).join("")
-    :`<tr><td colspan="8">No mock exams yet. Take one on the Practice tab.</td></tr>`;
+  drawMockChart();
+  $("#pMocks").innerHTML=log.mocks.length?log.mocks.slice().reverse().map(m=>`<tr><td>${new Date(m.t).toLocaleDateString(undefined,{month:"short",day:"numeric"})}</td><td class="${m.pct>=75?"pass":"fail"}"><b>${m.pct}%</b></td>${Object.keys(ab).map(d=>`<td>${m.by[d]?pctTxt(m.by[d][0],m.by[d][1]):"—"}</td>`).join("")}</tr>`).join("")
+    :`<tr><td colspan="7">No mock exams yet. Take one on the Practice tab.</td></tr>`;
   const days=Object.keys(log.days).sort().reverse().slice(0,30);
   $("#pLog").innerHTML=days.length?days.map(k=>{const e=log.days[k];return `<tr><td>${k}</td><td>${e.a}</td><td>${pctTxt(e.c,e.a)}</td><td>${Math.round((e.m||0)/60)} min</td></tr>`}).join("")
     :`<tr><td colspan="4">Nothing logged yet. Answer some questions or play a track.</td></tr>`;
@@ -1529,6 +1570,65 @@ $("#autonext").setAttribute("aria-pressed",store.get("ribo-autonext",true));
 $("#autonext").onclick=()=>{const on=$("#autonext").getAttribute("aria-pressed")!=="true";$("#autonext").setAttribute("aria-pressed",on);store.set("ribo-autonext",on)};
 $("#back15").onclick=()=>{audio.currentTime=Math.max(0,audio.currentTime-15)};
 $("#fwd30").onclick=()=>{audio.currentTime+=30};
+
+
+/* ---------- flashcards ---------- */
+const DECKS={
+ abbr:{n:"Abbreviations",c:[["RIBO","Registered Insurance Brokers of Ontario: licenses and disciplines brokers"],["FSRA","Financial Services Regulatory Authority of Ontario: insurers, agents, auto rates"],["CCIR","Canadian Council of Insurance Regulators: Fair Treatment of Customers"],["CISRO","Canadian Insurance Services Regulatory Organizations: intermediary code of conduct"],["IBAO","Insurance Brokers Association of Ontario: trade association, not a regulator"],["OAP 1","Ontario Automobile Policy, owner's form"],["OAP 4","Ontario Automobile Policy, garage form"],["OPCF","Ontario Policy Change Form: a numbered auto endorsement"],["SPF 6","Standard Policy Form 6: non-owned automobile policy"],["SABS","Statutory Accident Benefits Schedule"],["DCPD","Direct Compensation, Property Damage: your insurer pays your car for the part you didn't cause"],["MIG","Minor Injury Guideline: $3,500 cap for sprains, strains, whiplash"],["FA","Facility Association: auto insurer of last resort"],["MVACF","Motor Vehicle Accident Claims Fund: pays victims when no insurance applies"],["CAIA","Compulsory Automobile Insurance Act"],["CVOR","Commercial Vehicle Operator's Registration: trucks over 4,500 kg, buses"],["MGA","Managing General Agent: underwrites and binds for insurers"],["CGL","Commercial General Liability"],["BI","Business Interruption: lost profit and continuing expenses"],["E&O","Errors and Omissions: professional liability"],["D&O","Directors and Officers liability"],["ACV","Actual Cash Value: replacement cost minus depreciation"],["ALE","Additional Living Expense (home Coverage D)"],["OHIP","Ontario Health Insurance Plan: 212 days away limit"],["PIPEDA","Personal Information Protection and Electronic Documents Act: privacy"],["CASL","Canada's Anti-Spam Legislation: consent before commercial emails"],["CE","Continuing Education: required every licence year"],["WETT","Wood Energy Technology Transfer: wood stove inspection"],["GIO","General Insurance OmbudService: disputes with an insurer"]]},
+ opcf:{n:"Endorsements (OPCF)",c:[["OPCF 5","Permission to rent or lease the car to others"],["OPCF 16","Suspend coverage (car stored)"],["OPCF 17","Reinstate coverage after 16"],["OPCF 19","Limit payment to a stated value"],["OPCF 19A","Agreed value (classic cars, appraisal)"],["OPCF 20","Loss of use: rental car after a covered loss"],["OPCF 23A","Lienholder clause: protects the lender"],["OPCF 27","Damage to non-owned cars you drive (rentals)"],["OPCF 27B","Business version of 27"],["OPCF 28","Reduce coverage for a named person"],["OPCF 28A","Exclude a named driver completely"],["OPCF 39","Accident waiver: first at-fault accident"],["OPCF 40","Fire and theft deductible"],["OPCF 43","Remove depreciation deduction (new car)"],["OPCF 44R","Family protection: at-fault driver's limit too low"],["OPCF 47R","Optional accident benefits (2026 reform)"],["OPCF 49","Agreement Not to Recover: removes DCPD"]]},
+ cov:{n:"Coverages and sections",c:[["Home A","Dwelling: house and anything attached"],["Home B","Detached private structures: garage, shed, fence"],["Home C","Personal property (contents)"],["Home D","Additional living expense / fair rental value"],["Home E","Legal liability"],["Home F","Voluntary medical payments to others"],["Home G","Voluntary payment for damage to others' property"],["Home H","Voluntary compensation for residence employees"],["CGL A","Bodily injury and property damage to others"],["CGL B","Personal and advertising injury (false arrest, libel)"],["CGL C","Medical payments, regardless of fault"],["CGL D","Tenants' legal liability"],["OAP Section 3","Third party liability"],["OAP Section 4","Accident benefits (your injuries, no-fault)"],["OAP Section 5","Uninsured automobile"],["OAP Section 6","DCPD"],["OAP Section 7","Loss or damage to your car"]]},
+ num:{n:"Numbers",c:[["Minimum auto liability","$200,000"],["Non-catastrophic medical, rehab, attendant care","$65,000 combined"],["Catastrophic limit","$1,000,000 combined"],["Minor Injury Guideline cap","$3,500"],["Standard income replacement","70% of gross, up to $400 a week (optional since July 2026)"],["Insurer cancels: notice","5 days in person · 15 days registered mail"],["Proof of loss for the car","90 days"],["Tell insurer you'll claim accident benefits","Within 7 days"],["Report a collision to police","Any injury or damage over $2,000"],["Driving uninsured, first offence","$5,000 to $25,000 fine"],["CVOR needed above","4,500 kg"],["OHIP limit outside Canada","212 days in 12 months"],["Home vacancy limit (common)","30 consecutive days"],["Exam questions","115: 100 scored + 15 pilot"],["Exam time and pass mark","3 hours · 75%"],["Free exam transfer or refund","More than 15 days before the exam"]]},
+ term:{n:"Principles and terms",c:[["Indemnity","Back to where you were before the loss, no profit"],["Contribution","Two policies share the same loss"],["Insurable interest","You must lose money; for property, at the time of loss"],["Utmost good faith","Both sides must disclose material facts"],["Subrogation","After paying, the insurer recovers from whoever caused the loss"],["Proximate cause","The dominant, effective cause of the loss"],["Peril","A cause of loss: fire, theft, hail"],["Physical hazard","A tangible condition: old wiring, oily rags"],["Moral hazard","A person's dishonesty or motives"],["Co-insurance formula","Carried ÷ required × loss"],["DCPD formula","Damage × % not at fault"],["Loss ratio","Claims incurred ÷ premiums earned"],["Occurrence policy","Covers injury that happens during the policy"],["Claims-made policy","Covers claims made during the policy, after the retro date"],["Tail","Extended reporting period after a claims-made policy ends"],["Surety bond parties","Principal, obligee, surety"],["Performance bond","Guarantees the work will be finished"],["Tied selling","Forcing one product to get another: prohibited"],["Negative option billing","Charging unless the client says no: prohibited"]]}
+};
+const cardMem=store.get("ribo-cards",{});   // "deck|front" -> {k: times known in a row, t: last seen}
+let deckKey=store.get("ribo-deck","abbr"),queue=[],curCard=null,flipped=false;
+function cid(c){return deckKey+"|"+c[0]}
+function buildDeckChips(){const box=$("#deckChips");box.innerHTML="";Object.entries(DECKS).forEach(([k,d])=>{const b=document.createElement("button");b.type="button";b.className="chip";
+  const known=d.c.filter(c=>(cardMem[k+"|"+c[0]]||{}).k>=2).length;b.textContent=`${d.n} (${known}/${d.c.length})`;b.setAttribute("aria-pressed",k===deckKey);
+  b.onclick=()=>{deckKey=k;store.set("ribo-deck",k);buildDeckChips();newQueue()};box.appendChild(b)})}
+function newQueue(){const d=DECKS[deckKey].c;const unknown=shuffle(d.filter(c=>((cardMem[cid(c)]||{}).k||0)<2)),known=shuffle(d.filter(c=>((cardMem[cid(c)]||{}).k||0)>=2));
+  queue=[...unknown,...known];nextCard()}
+function nextCard(){curCard=queue.shift()||null;flipped=false;const f=$("#fcard");f.classList.remove("flipped");$("#fback").hidden=true;$("#fhint").hidden=false;
+  $("#fAgain").disabled=$("#fGot").disabled=true;$("#fdeck").textContent=DECKS[deckKey].n;
+  $("#ffront").textContent=curCard?curCard[0]:"Deck finished";$("#fback").textContent=curCard?curCard[1]:"";
+  if(!curCard)$("#fhint").textContent="Pick a deck or reset to go again.";else $("#fhint").textContent="Tap to show the answer";
+  const d=DECKS[deckKey].c,known=d.filter(c=>((cardMem[cid(c)]||{}).k||0)>=2).length;
+  $("#fcount").textContent=`${known} of ${d.length} known · ${queue.length+(curCard?1:0)} left in this round`;$("#fbar").style.width=(known/d.length*100)+"%"}
+$("#fcard").onclick=()=>{if(!curCard||flipped)return;flipped=true;$("#fcard").classList.add("flipped");$("#fback").hidden=false;$("#fhint").hidden=true;$("#fAgain").disabled=$("#fGot").disabled=false;$("#fGot").focus()};
+function grade(ok){if(!curCard)return;const m=cardMem[cid(curCard)]||{k:0};m.k=ok?(m.k||0)+1:0;m.t=Date.now();cardMem[cid(curCard)]=m;store.set("ribo-cards",cardMem);
+  if(!ok)queue.splice(Math.min(3,queue.length),0,curCard);   // missed cards come back after a few others
+  buildDeckChips();nextCard()}
+$("#fGot").onclick=()=>grade(true);$("#fAgain").onclick=()=>grade(false);
+$("#fReset").onclick=()=>{DECKS[deckKey].c.forEach(c=>delete cardMem[cid(c)]);store.set("ribo-cards",cardMem);buildDeckChips();newQueue()};
+buildDeckChips();newQueue();
+
+/* ---------- "See it in a picture" after an answer ---------- */
+function figFor(q){const t=q.q+" "+q.o[q.a]+" "+q.e;
+  if(/claims-made|occurrence form|retroactive|extended reporting/i.test(t))return{v:"map",sel:"#fig-claims",n:"occurrence vs claims-made"};
+  if(/surety|obligee|bid bond|performance bond|payment bond/i.test(t))return{v:"map",sel:"#fig-bond",n:"the surety bond"};
+  if(q.d==="com"&&/\bCGL\b|Coverage [A-D]\b/.test(t))return{v:"map",sel:"#fig-cgl",n:"CGL coverages A–D"};
+  if(/co-insurance/i.test(t))return{v:"map",sel:"#fig-coins",n:"co-insurance"};
+  if(/sewer|overland|ground water|sump|burst/i.test(t))return{v:"map",sel:"#fig-water",n:"water damage"};
+  if(/broad form|basic form|comprehensive form|named perils basis|all risks basis/i.test(t))return{v:"map",sel:"#fig-forms",n:"the policy forms"};
+  if(q.d==="hab"&&/Coverage [A-H]\b|detached|additional living/i.test(t))return{v:"map",sel:"#fig-house",n:"home coverages A–H"};
+  if(/\bOPCF\b/.test(t))return{v:"course",sel:".ogrid",n:"the endorsement groups"};
+  if(/\bDCPD\b|Direct Compensation/i.test(t))return{v:"map",sel:"#fig-dcpd",n:"the DCPD split"};
+  if(/Fault Determination|rear-end|changes lanes|left turn|parked car|stop sign|red light/i.test(t))return{v:"map",sel:"#fig-fault",n:"the fault rules"};
+  if(q.d==="auto"&&/Section [3-7]\b|uninsured auto|accident benefits|third-party liability/i.test(t))return{v:"map",sel:"#fig-car",n:"the auto sections"};
+  if(q.d==="gen"&&/\b(FSRA|RIBO|CCIR|CISRO|IBAO)\b|OmbudService/.test(t))return{v:"map",sel:"#fig-regs",n:"who regulates what"};
+  return null}
+function goFig(f){location.hash="#"+f.v;setTimeout(()=>{const el=document.querySelector("#v-"+f.v+" "+f.sel);if(!el)return;const d=el.closest("details");if(d)d.open=true;el.scrollIntoView({block:"start"});window.scrollBy(0,-12)},80)}
+function addFigLink(host,q){const f=figFor(q);if(!f)return;const b=document.createElement("button");b.type="button";b.className="figlink";b.textContent="See it in a picture: "+f.n+" →";b.onclick=()=>goFig(f);host.appendChild(document.createElement("br"));host.appendChild(b)}
+
+/* ---------- mock score chart ---------- */
+function drawMockChart(){const box=$("#pChart");const ms=log.mocks.slice(-12);if(!ms.length){box.innerHTML="";return}
+  const W=320,H=150,L=28,R=10,T=12,B=22,x=i=>ms.length===1?(L+W-R)/2:L+i*(W-L-R)/(ms.length-1),y=p=>T+(100-p)*(H-T-B)/100;
+  let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mock exam scores over time against the 75 percent pass mark">`;
+  [0,50,100].forEach(p=>{g+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y(p)}" y2="${y(p)}"/><text x="${L-4}" y="${y(p)+4}" text-anchor="end">${p}</text>`});
+  g+=`<line class="pass" x1="${L}" x2="${W-R}" y1="${y(75)}" y2="${y(75)}"/><text class="pl" x="${W-R}" y="${y(75)+14}" text-anchor="end">pass 75%</text>`;
+  if(ms.length>1)g+=`<polyline class="ln" points="${ms.map((m,i)=>x(i)+","+y(m.pct)).join(" ")}"/>`;
+  ms.forEach((m,i)=>{g+=`<circle class="dot" cx="${x(i)}" cy="${y(m.pct)}" r="4"/><text x="${x(i)}" y="${y(m.pct)-8}" text-anchor="middle">${m.pct}</text>`});
+  box.innerHTML=g+"</svg>"}
 
 /* lesson "Practise this topic" buttons */
 document.querySelectorAll("[data-practice]").forEach(b=>b.onclick=()=>{topic=b.dataset.practice;setMode("practice");location.hash="#practice";buildFilters();start();window.scrollTo(0,0)});

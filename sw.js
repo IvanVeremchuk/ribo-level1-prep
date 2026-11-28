@@ -1,5 +1,5 @@
 // Offline support: keeps the app and question bank on the phone. Audio streams from the network.
-const CACHE = "ribo-prep-v5";
+const CACHE = "ribo-prep-v6";
 const SHELL = ["./", "index.html", "questions.js", "tracks.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", e => {
