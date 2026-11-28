@@ -206,6 +206,30 @@ table.mini .y{color:var(--ok);font-weight:700} table.mini .n{color:var(--bad);fo
 .week li.ticked span{text-decoration:line-through;color:var(--muted)}
 .week ul{list-style:none;padding-left:0}
 .wprog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:8px}.wprog i{display:block;height:100%;background:var(--ok)}
+
+/* big picture */
+.bigmap{display:flex;flex-direction:column;gap:4px}
+.layer{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--lc,var(--accent));border-radius:10px;padding:8px 10px}
+.layer h4{margin:0 0 6px;font:700 12.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--lc,var(--accent))}
+.layer .nodes{display:flex;flex-wrap:wrap;gap:6px}
+.lyr-down{text-align:center;color:var(--muted);font-size:14px;line-height:1}
+.node{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 11px;font:600 13.5px var(--body);cursor:pointer;transition:opacity .15s}
+.node .pdf,.pdf{font:700 10px var(--mono);background:var(--c-trv);color:var(--card);border-radius:4px;padding:1px 4px;margin-left:5px;vertical-align:1px}
+.bigmap.focus .node{opacity:.28}
+.bigmap.focus .node.lit{opacity:1;border-color:var(--lc2,var(--accent));background:var(--accent-soft)}
+.bigmap.focus .node.sel{opacity:1;background:var(--accent);border-color:var(--accent);color:var(--card)}
+.bigpanel{background:var(--accent-soft);border-radius:12px;padding:12px 14px;margin:2px 0 6px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.bigpanel h3{margin:0;font:800 18px var(--display)}
+.bigpanel .links{display:flex;flex-wrap:wrap;gap:6px}
+.bigpanel .links button{border:1px solid var(--accent);background:var(--card);color:var(--accent);border-radius:999px;padding:3px 10px;font:600 13px var(--body);cursor:pointer}
+@media (prefers-reduced-motion:reduce){.node{transition:none}}
+/* picture under each answer */
+.qfig{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--paper);display:flex;flex-direction:column;gap:8px;min-width:0}
+.qfig .path{font:600 13px var(--body);color:var(--muted)} .qfig .path b{color:var(--accent)}
+.qfig .figt{margin-top:2px}
+.qfig .legend div{font-size:14px}
+.qfig .acts{display:flex;flex-wrap:wrap;gap:12px}
+.mockfig summary{cursor:pointer;font-weight:700;color:var(--accent)}
 /* study plan */
 .wbar5{display:flex;height:34px;border-radius:8px;overflow:hidden;font:700 12.5px var(--body)}
 .wbar5 span{display:flex;align-items:center;justify-content:center;color:var(--card);min-width:0;overflow:hidden;white-space:nowrap}
@@ -419,6 +443,7 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
   <!-- COURSE -->
   <section class="view" id="v-course" hidden>
     <p>Eight short lessons. Each one is the minimum you need before reading the source documents. Read the lesson, then the source, then do the matching practice set.</p>
+    <div class="rowbtns"><button class="btn ghost" type="button" id="toBig">See the big picture: how everything connects</button></div>
 
     <details class="lesson"><summary><h3>Abbreviations and names</h3><span class="w">Glossary</span></summary><div class="body">
       <div class="tbl"><table>
@@ -1003,6 +1028,12 @@ footer{margin-top:40px;color:var(--muted);font-size:14px;border-top:1px solid va
   <section class="view" id="v-map" hidden>
     <p>The whole exam on one screen. Each topic shows its share of the exam and the things you need to know inside it. Below are pictures for each topic, so you can see which coverage pays for what.</p>
 
+    <h2 id="big">The big picture: how it all connects</h2>
+    <p class="cap">Five layers, from the rules down to what happens with a client. <b>Tap any item</b> to light up everything it's connected to. Items marked <span class="pdf">PDF</span> are in RIBO's reference document, on screen during the exam.</p>
+    <div id="bigmap" class="bigmap"></div>
+    <div id="bigpanel" class="bigpanel" aria-live="polite"></div>
+
+    <h2>The exam by topic</h2>
     <div class="maproot"><b>RIBO Level 1 exam</b><span>100 scored questions · 75% to pass</span></div>
     <div class="branches">
       <div class="branch d-gen"><div class="bh"><b>General</b><span class="w">25%</span></div><div class="wbar"><i style="width:25%"></i></div>
@@ -1425,7 +1456,7 @@ function showAnswer(q,opts,btn,ok){
   fb.innerHTML=`<div class="explain"><b class="${btn&&!ok?"no":"ok"}"></b> <span></span></div><div style="margin-top:12px"><button class="btn" type="button" id="next">${i+1<deck.length?"Next question":(reveal?"Finish":"See score")}</button></div>`;
   fb.querySelector(".explain b").textContent=label;
   fb.querySelector(".explain span").textContent=q.e;
-  addFigLink(fb.querySelector(".explain"),q);
+  addFigLink(fb,q,false);
   $("#next").onclick=()=>{i++;render()};
 }
 let reveal=!!store.get("ribo-reveal",false);
@@ -1519,7 +1550,7 @@ function mockFinish(){
     el.querySelector(".mq").textContent=q.q;
     el.querySelector(".yours").textContent="Your answer: "+(a===null?"(no answer)":q.o[a]);
     el.querySelector(".corr").textContent="Correct: "+q.o[q.a];
-    el.querySelector(".ex").textContent=q.e;addFigLink(el,q);mm.appendChild(el)});
+    el.querySelector(".ex").textContent=q.e;addFigLink(el,q,true);mm.appendChild(el)});
   $("#mAgain").onclick=mockStart;drawScores();
 }
 
@@ -1636,23 +1667,108 @@ $("#fGot").onclick=()=>grade(true);$("#fAgain").onclick=()=>grade(false);
 $("#fReset").onclick=()=>{DECKS[deckKey].c.forEach(c=>delete cardMem[cid(c)]);store.set("ribo-cards",cardMem);buildDeckChips();newQueue()};
 buildDeckChips();newQueue();
 
-/* ---------- "See it in a picture" after an answer ---------- */
-function figFor(q){const t=q.q+" "+q.o[q.a]+" "+q.e;
-  if(/claims-made|occurrence form|retroactive|extended reporting/i.test(t))return{v:"map",sel:"#fig-claims",n:"occurrence vs claims-made"};
-  if(/surety|obligee|bid bond|performance bond|payment bond/i.test(t))return{v:"map",sel:"#fig-bond",n:"the surety bond"};
-  if(q.d==="com"&&/\bCGL\b|Coverage [A-D]\b/.test(t))return{v:"map",sel:"#fig-cgl",n:"CGL coverages A–D"};
-  if(/co-insurance/i.test(t))return{v:"map",sel:"#fig-coins",n:"co-insurance"};
-  if(/sewer|overland|ground water|sump|burst/i.test(t))return{v:"map",sel:"#fig-water",n:"water damage"};
-  if(/broad form|basic form|comprehensive form|named perils basis|all risks basis/i.test(t))return{v:"map",sel:"#fig-forms",n:"the policy forms"};
-  if(q.d==="hab"&&/Coverage [A-H]\b|detached|additional living/i.test(t))return{v:"map",sel:"#fig-house",n:"home coverages A–H"};
-  if(/\bOPCF\b/.test(t))return{v:"course",sel:".ogrid",n:"the endorsement groups"};
-  if(/\bDCPD\b|Direct Compensation/i.test(t))return{v:"map",sel:"#fig-dcpd",n:"the DCPD split"};
-  if(/Fault Determination|rear-end|changes lanes|left turn|parked car|stop sign|red light/i.test(t))return{v:"map",sel:"#fig-fault",n:"the fault rules"};
-  if(q.d==="auto"&&/Section [3-7]\b|uninsured auto|accident benefits|third-party liability/i.test(t))return{v:"map",sel:"#fig-car",n:"the auto sections"};
-  if(q.d==="gen"&&/\b(FSRA|RIBO|CCIR|CISRO|IBAO)\b|OmbudService/.test(t))return{v:"map",sel:"#fig-regs",n:"who regulates what"};
-  return null}
-function goFig(f){location.hash="#"+f.v;setTimeout(()=>{const el=document.querySelector("#v-"+f.v+" "+f.sel);if(!el)return;const d=el.closest("details");if(d)d.open=true;el.scrollIntoView({block:"start"});window.scrollBy(0,-12)},80)}
-function addFigLink(host,q){const f=figFor(q);if(!f)return;const b=document.createElement("button");b.type="button";b.className="figlink";b.textContent="See it in a picture: "+f.n+" →";b.onclick=()=>goFig(f);host.appendChild(document.createElement("br"));host.appendChild(b)}
+
+/* ---------- big picture map ---------- */
+const LAYERS=[["law","Rules: laws and documents","var(--c-gen)"],["reg","Who enforces them","var(--c-com)"],["ppl","Who's involved","var(--c-hab)"],["prod","What's sold","var(--c-auto)"],["proc","What happens","var(--c-trv)"]];
+const NODES={
+ insact:["law","Insurance Act (Ontario)",0,"The main Ontario insurance law. It writes the statutory conditions into every policy (notice, proof of loss, cancellation) and is administered by FSRA.",["fsra","home","auto","com","claims","insurer"],"Lesson 4 · statutory conditions"],
+ ribact:["law","RIB Act, Reg 991, By-Laws",1,"Creates RIBO. Regulation 991 is the broker code of conduct (trust money, conflicts, records). By-Law 3 is your licence and what you must report.",["ribo","broker","sale","licence","complain"],"Lesson 2"],
+ oap1:["law","OAP 1 and OPCFs",1,"The one standard auto policy (Sections 3 to 7 and statutory conditions) plus the numbered endorsements. FSRA approves the wording.",["fsra","auto","sabs","fdr","claims","insurer"],"Lesson 3"],
+ sabs:["law","SABS (accident benefits)",0,"The regulation behind OAP 1 Section 4: who gets accident benefits and how much. Since July 2026 only medical, rehab and attendant care are mandatory.",["oap1","auto","claims","fsra"],"Lesson 3"],
+ fdr:["law","Fault Determination Rules",0,"Diagrams that set each driver's percentage of fault. Used for DCPD (Section 6) and for premiums, not police charges.",["oap1","auto","claims","adjuster"],"Lesson 3 · picture: fault rules"],
+ caia:["law","Compulsory Automobile Insurance Act",0,"Makes auto insurance mandatory on Ontario roads. Driving uninsured: $5,000 to $25,000 fine.",["auto","client"],"Lesson 3"],
+ wordings:["law","Home and commercial wordings",0,"Each insurer writes its own home and commercial policies, usually on Insurance Bureau of Canada models. Same structure: declarations, coverages, exclusions, conditions.",["home","com","travel","insurer"],"Lessons 4 and 5"],
+ privacy:["law","PIPEDA and CASL",0,"Federal privacy law (consent, safeguards, breach reporting) and anti-spam law (consent before marketing emails).",["broker","sale","client"],"Lesson 2"],
+ ribo:["reg","RIBO",0,"Licenses, regulates and disciplines general insurance brokers in Ontario. Takes complaints about brokers.",["ribact","broker","licence","complain"],"Lesson 2 · picture: who regulates what"],
+ fsra:["reg","FSRA",0,"Regulates insurers and agents, approves auto rates and the OAP 1, enforces the Take All Comers rule.",["insact","oap1","sabs","insurer","agent","auto"],"Lesson 2"],
+ national:["reg","CCIR and CISRO",0,"National groups of regulators: Fair Treatment of Customers (CCIR) and the Code of Conduct for Insurance Intermediaries (CISRO).",["broker","agent","sale"],"Lesson 2"],
+ gio:["reg","General Insurance OmbudService",0,"Free help when a client disputes an insurer's decision, after the insurer's own complaint process.",["complain","insurer","client"],"Lesson 2 · picture: complaints"],
+ client:["ppl","Client",0,"The person or business buying insurance. Must disclose material facts (utmost good faith).",["broker","agent","sale","claims","complain","caia","privacy"],"Lesson 1"],
+ broker:["ppl","You (broker)",0,"Works for the client, shops many insurers. Level 1: supervised by a Principal Broker at a RIBO-registered brokerage.",["client","insurer","ribo","ribact","sale","claims","privacy","national","licence"],"Lessons 2 and 7"],
+ agent:["ppl","Agent",0,"Works for the insurer. A captive agent sells only one company. Regulated by FSRA, not RIBO.",["insurer","fsra","client"],"Lesson 1"],
+ insurer:["ppl","Insurer (underwriter)",0,"Accepts the risk and sets terms and price. Its adjusters handle claims.",["broker","agent","adjuster","fsra","oap1","wordings","claims","gio"],"Lesson 1"],
+ adjuster:["ppl","Adjuster",0,"Investigates claims and decides what's covered and how much. The broker never promises coverage.",["insurer","claims","fdr"],"Lesson 7"],
+ auto:["prod","Auto (25%)",0,"OAP 1 Sections 3 to 7, endorsements, accident benefits, DCPD, fault rules.",["oap1","sabs","fdr","caia","fsra","insact"],"Lesson 3 · Practise Auto"],
+ home:["prod","Home (25%)",0,"Homeowner, tenant, condo, seasonal. Coverages A to H, forms, water, co-insurance.",["wordings","insact","claims"],"Lesson 4 · Practise Habitational"],
+ com:["prod","Commercial (20%)",0,"Property, business interruption, crime, CGL, professional, auto, bonds.",["wordings","insact","claims"],"Lesson 5 · Practise Commercial"],
+ travel:["prod","Travel (5%)",0,"Emergency medical, cancellation, interruption. Pre-existing conditions and OHIP limits.",["wordings","claims"],"Lesson 6 · Practise Travel"],
+ sale:["proc","Advice and sale",0,"Needs analysis, recommend, disclose conflicts, bind within authority, document everything.",["broker","client","ribact","privacy","national"],"Lesson 7 · picture: client journey"],
+ claims:["proc","Claims",0,"First notice of loss, adjuster decides, statutory conditions apply. Auto: DCPD and fault rules.",["adjuster","insurer","client","broker","insact","oap1","fdr","sabs","home","com","travel","auto"],"Lesson 7 · picture: claim steps"],
+ complain:["proc","Complaints",0,"About a broker → RIBO. About an insurer's decision → insurer's process → OmbudService.",["ribo","gio","client","ribact"],"Lesson 2 · picture: complaints"],
+ licence:["proc","Licence and CE",0,"Pass the exam, get a job at a registered brokerage, apply to RIBO, renew every year with continuing education.",["ribo","ribact","broker"],"Lesson 2 · picture: Level 1 licence"]
+};
+let bigSel=null;
+function renderBig(){const box=$("#bigmap");if(!box)return;let h="";
+  LAYERS.forEach(([k,label,col],li)=>{h+=`<div class="layer" style="--lc:${col}"><h4>${label}</h4><div class="nodes">`;
+    Object.entries(NODES).filter(([,n])=>n[0]===k).forEach(([id,n])=>{h+=`<button type="button" class="node" data-node="${id}">${n[1]}${n[2]?'<span class="pdf">PDF</span>':""}</button>`});
+    h+="</div></div>";if(li<LAYERS.length-1)h+='<div class="lyr-down" aria-hidden="true">↓</div>'});
+  box.innerHTML=h;box.querySelectorAll(".node").forEach(b=>b.onclick=()=>bigSelect(b.dataset.node===bigSel?null:b.dataset.node));bigSelect(bigSel||"broker",true)}
+function linksOf(id){const out=new Set(NODES[id][4]);Object.entries(NODES).forEach(([o,n])=>{if(n[4].includes(id))out.add(o)});out.delete(id);return[...out]}
+function bigSelect(id,quiet){bigSel=id;const box=$("#bigmap"),panel=$("#bigpanel");if(!box)return;
+  box.classList.toggle("focus",!!id);const lit=id?linksOf(id):[];
+  box.querySelectorAll(".node").forEach(b=>{b.classList.toggle("sel",b.dataset.node===id);b.classList.toggle("lit",lit.includes(b.dataset.node))});
+  if(!id){box.after(panel);panel.innerHTML='<p>Tap an item above to see how it connects.</p>';return}
+  const selBtn=box.querySelector(".node.sel");if(selBtn)selBtn.closest(".layer").after(panel);   // explanation right under the tapped layer
+  const n=NODES[id];panel.innerHTML=`<h3>${n[1]}${n[2]?' <span class="pdf">PDF</span>':""}</h3><p>${n[3]}</p><p class="cap"><b>Learn it:</b> ${n[5]}</p><div class="links">${lit.map(o=>`<button type="button" data-go="${o}">${NODES[o][1]}</button>`).join("")}</div>`;
+  panel.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>bigSelect(b.dataset.go))}
+renderBig();
+$("#toBig").onclick=()=>{location.hash="#map";setTimeout(()=>{$("#big").scrollIntoView({block:"start"})},60)};
+
+/* ---------- a picture and "where this fits" for every question ---------- */
+// [test, picture title, path in the big picture, node to open]
+const FIGRULES=[
+ [/claims-made|occurrence (form|basis|policy)|retroactive|extended reporting|tail/i,"Occurrence vs claims-made","Commercial › Liability › occurrence vs claims-made","com"],
+ [/surety|obligee|bid bond|performance bond|payment bond|labour and material/i,"Surety bond: three parties","Commercial › Specialty › surety bonds","com"],
+ [/\b3-D\b|employee dishonesty|fidelity|crime|robbery|burglary|forgery|social engineering/i,"A commercial package: four rooms and the neighbours","Commercial › Package › crime","com"],
+ [/business interruption|\bBI\b|extra expense|indemnity period|contingent|civil authority/i,"How business interruption pays","Commercial › Package › business interruption","com"],
+ [{d:"com",re:/\bCGL\b|Coverage [A-D]\b|personal and advertising|products-completed|tenants' legal/i},"Commercial liability (CGL) in four boxes","Commercial › Liability › CGL coverages A–D","com"],
+ [/co-insurance/i,"Co-insurance: the penalty for insuring too low","Home and Commercial › Property › co-insurance","home"],
+ [/sewer|overland|ground water|sump|burst|ice damming|seepage|slow (leak|drip)/i,"Water damage: covered or not?","Home › Endorsements › water","home"],
+ [/broad form|basic form|comprehensive form|named perils|all risks/i,"Policy forms: how wide is the coverage?","Home › Policy forms","home"],
+ [/actual cash value|\bACV\b|depreciat|replacement cost/i,"Replacement cost vs actual cash value","Home › How losses are paid","home"],
+ [{d:"hab",re:/tenant|condo|landlord|rented dwelling|unit owner|corporation/i},"Which policy covers what","Home › Policy types","home"],
+ [{d:"hab",re:/./},"Coverages A to H: who pays for what","Home › Coverages A–H","home"],
+ [{d:"com",re:/./},"A commercial package: four rooms and the neighbours","Commercial › The package","com"],
+ [/\bOPCF\b|endorsement/i,"Endorsements in four groups","Auto › OAP 1 › endorsements (OPCF)","oap1"],
+ [/\bDCPD\b|Direct Compensation/i,"DCPD: who pays for your car","Auto › OAP 1 Section 6 › Fault Determination Rules","fdr"],
+ [/Fault Determination|rear-end|changes lanes|left turn|parked car|stop sign|red light|chain reaction|backing out/i,"Fault Determination Rules at a glance","Auto › Fault Determination Rules › DCPD","fdr"],
+ [{d:"auto",re:/\b(5|15|90|7) days|\$200,000|\$2,000|\$3,500|\$65,000|\$1,000,000|\$400 a week|cancel|proof of loss|police/i},"Deadlines and numbers","Auto › OAP 1 and SABS › key numbers","oap1"],
+ [{d:"auto",re:/./},"Which section pays for what","Auto › OAP 1 › Sections 3–7","oap1"],
+ [/OHIP|212 days|snowbird|provincial health/i,"OHIP limit outside Canada","Travel › OHIP limits","travel"],
+ [{d:"trv",re:/./},"A trip, start to finish","Travel › before, during, after the trip","travel"],
+ [/indemnity|subrogation|contribution|insurable interest|good faith|proximate cause|salvage|law of large numbers/i,"Six principles to know by name","General › Principles of insurance","client"],
+ [/hazard|peril/i,"Peril or hazard?","General › Perils and hazards","client"],
+ [/complain|OmbudService/i,"Where complaints go","What happens › Complaints","complain"],
+ [/trust account|premium.*(deposit|cheque)|operating account/i,"Where a client's premium goes","Rules › RIB Act and Reg 991 › trust money","ribact"],
+ [/Level 1|Principal Broker|supervis|register with RIBO|broker'?s? licen[cs]e|continuing education|designation|\bC E\b|\bCAIB\b|\bCIP\b/i,"Your Level 1 licence","What happens › Licence and CE","licence"],
+ [/\b(FSRA|RIBO|CCIR|CISRO|IBAO|OSFI|PACICC|IBC)\b|regulat/i,"Who regulates what","Who enforces them › regulators","ribo"],
+ [/broker|agent|direct writer|\bMGA\b|Lloyd|reinsur|mutual|underwriter|loss ratio|combined ratio/i,"Three ways insurance is sold","Who's involved › brokers, agents, insurers","broker"],
+ [/adjuster|first notice|claim/i,"When a claim happens","What happens › Claims","claims"],
+ [/./,"The client journey","What happens › Advice and sale","sale"]
+];
+function ruleFor(q){const t=q.q+" "+q.o.join(" ")+" "+q.e;
+  for(const r of FIGRULES){const m=r[0];if(m instanceof RegExp?m.test(t):(q.d===m.d&&m.re.test(t)))return r}return null}
+let figN=0;
+function figNodes(title){const heads=[...document.querySelectorAll("#v-map h3, #v-course h4.figt")];
+  const h=heads.find(x=>x.textContent.trim()===title);if(!h)return null;
+  const out=[];let el=h.nextElementSibling;
+  while(el&&!el.matches("h2,h3,h4.figt,.traps,.onemin,.rowbtns")){out.push(el);el=el.nextElementSibling}
+  return out}
+function cloneFig(title){const nodes=figNodes(title);if(!nodes||!nodes.length)return null;const frag=document.createElement("div");
+  nodes.forEach(n=>{const c=n.cloneNode(true);figN++;
+    c.querySelectorAll("[id]").forEach(e=>{const o=e.id,nw=o+"-q"+figN;e.id=nw;c.querySelectorAll(`[marker-end="url(#${o})"]`).forEach(x=>x.setAttribute("marker-end",`url(#${nw})`))});
+    c.querySelectorAll("[aria-labelledby]").forEach(e=>e.removeAttribute("aria-labelledby"));if(c.id)c.removeAttribute("id");frag.appendChild(c)});
+  return frag}
+function addFigLink(host,q,collapsed){const r=ruleFor(q);if(!r)return;const [,title,path,node]=r;
+  const box=document.createElement(collapsed?"details":"div");box.className="qfig"+(collapsed?" mockfig":"");
+  if(collapsed){const sm=document.createElement("summary");sm.textContent="Show the picture";box.appendChild(sm)}
+  const p=document.createElement("div");p.className="path";p.innerHTML="Where this fits: <b></b>";p.querySelector("b").textContent=path;box.appendChild(p);
+  const t=document.createElement("h4");t.className="figt";t.textContent=title;box.appendChild(t);
+  const fig=cloneFig(title);if(fig)box.appendChild(fig);
+  const acts=document.createElement("div");acts.className="acts";
+  const b=document.createElement("button");b.type="button";b.className="figlink";b.textContent="Open in the big picture →";
+  b.onclick=()=>{location.hash="#map";setTimeout(()=>{bigSelect(node);$("#big").scrollIntoView({block:"start"})},80)};acts.appendChild(b);box.appendChild(acts);
+  host.appendChild(box)}
 
 /* ---------- mock score chart ---------- */
 function drawMockChart(){const box=$("#pChart");const ms=log.mocks.slice(-12);if(!ms.length){box.innerHTML="";return}
